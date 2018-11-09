@@ -14,10 +14,10 @@ The supported environments are:
 ### The minimum required configuration:
 
 ```
-my-site:
-  repo: https://github.com/Varying-Vagrant-Vagrants/custom-site-template
-  hosts:
-    - my-site.test
+  mergeplace:
+    repo: https://github.com/mergeplace/mergeplace.git
+    hosts:
+      - mergeplace.test
 ```
 | Setting    | Value       |
 |------------|-------------|
@@ -31,17 +31,17 @@ my-site:
 
 ```
 my-site:
-  repo: https://github.com/Varying-Vagrant-Vagrants/custom-site-template
+  repo: https://github.com/mergeplace/mergeplace.git
   hosts:
-    - foo.test
+    - mergeplace.test
   custom:
     wp_version: nightly
 ```
 | Setting    | Value       |
 |------------|-------------|
-| Domain     | foo.test     |
-| Site Title | foo.test     |
-| DB Name    | my-site     |
+| Domain     | mergeplace.test     |
+| Site Title | mergeplace.test     |
+| DB Name    | mergeplace     |
 | Site Type  | Single      |
 | WP Version | Nightly     |
 
