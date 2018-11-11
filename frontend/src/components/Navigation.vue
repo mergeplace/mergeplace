@@ -120,7 +120,8 @@ export default {
         }
     }
     &__logo {
-    fill: $MERGE-MAIN-COLOR;
+    // fill: $MERGE-MAIN-COLOR;
+    fill: red;
     width: 31px;
     height: 40px;
     }

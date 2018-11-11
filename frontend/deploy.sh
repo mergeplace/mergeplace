@@ -4,19 +4,8 @@
 set -e
 
 # сборка
-npm run build
+npm run build:prod
 
-
-# если вы публикуете на пользовательский домен
-# echo 'www.example.com' > CNAME
-
-git add -A
-git commit -m 'deploy'
-
-# если вы публикуете по адресу https://<USERNAME>.github.io
-# git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
-
-# если вы публикуете по адресу https://<USERNAME>.github.io/<REPO>
-git push -f git@github.com:a1exalexander/merge-draft.git master:gh-pages
-
-
+rm -rf ../public_html/js/ ../public_html/css/ ../public_html/img/
+cp -r ./prod/* ../public_html
+mv ../public_html/index.html ../public_html/wp-content/themes/mergeplace/page-vue.php
