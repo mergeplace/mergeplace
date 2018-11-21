@@ -115,6 +115,7 @@ custom:
     wp_type: single
 ```
 Defines the type of install you are creating.
+
 Valid values are:
 - single
 - subdomain
