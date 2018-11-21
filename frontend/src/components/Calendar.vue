@@ -78,7 +78,7 @@ export default {
       navLinks: false,
       selectable: true,
       selectHelper: true,
-      googleCalendarApiKey: 'AIzaSyC-8JGRFhvrAw3gFAS4L7P3lMS0KaV9rJU',
+      googleCalendarApiKey: 'AIzaSyCwSdSdIblDFzQbJSzu17XmnqZ4WvOsTPw',
       events: {
         googleCalendarId: '13g6skar8uf2s0um2kmushttnc@group.calendar.google.com'
       },
@@ -92,7 +92,7 @@ export default {
         let eventData = {
           dateStart: start.format(),
           dateEnd: end.format(),
-          duration: hours + 'h - ' + Math.abs((+end.format('m') - +start.format('m'))) + 'm',
+          duration: hours + 'h' + (Math.abs((+end.format('m') - +start.format('m')))? ' - ' + Math.abs((+end.format('m') - +start.format('m'))) + 'm':''),
         }
         _this.saveEvent(eventData);
         if(hours){

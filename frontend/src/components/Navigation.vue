@@ -1,10 +1,11 @@
 <template>
 <nav class="navigation navigation--border" :style='onTransparent'>
     <router-link to='/' class='navigation__logo-wrapper' :style='onVisibility'>
-        <svg class="navigation__logo">
+        <svg class="navigation__logo" :class="{'navigation__logo--white': logoColor}">
             <use xlink:href='#logo'/>
         </svg>
     </router-link>
+    <router-link href="#" to='/menu' class="navigation__menu-link">MENU</router-link>
     <section class="button-menu__wrapper">
         <div class="button-menu__tooltip" v-if="tooltip">
             <span class="button-menu__text">
@@ -38,7 +39,7 @@ import SocialNetworks from '@/components/SocialNetworks.vue';
 
 export default {
     name: 'navigation',
-    props: {'navi': Boolean},
+    props: {'showNav': Boolean},
     components: {
         SocialNetworks
     },
@@ -60,7 +61,7 @@ export default {
     },
     methods: {
         goToMenu() { 
-            this.$router.push('/menu');
+           this.$router.push('/menu');
         },
         setCookie() {
             this.$cookies.set("tooltipCookie","tooltipCookie","1y");
@@ -72,8 +73,17 @@ export default {
             return this.tooltip = false;
         }
     },
+    computed: {
+        logoColor() {
+            let name = this.$route.name;
+            if (name == 'Hello') {
+                return true;
+            }
+            return false;
+        }
+    },
     watch: {
-        navi(boolean) {
+        showNav(boolean) {
             if(!boolean) {
                 this.onVisibility = this.visibility;
                 this.onTransparent = this.transparent;
@@ -102,28 +112,57 @@ export default {
     grid-template-rows: repeat(3, 1fr);
     align-items: center;
     justify-items: center;
-    align-content: center;	
+    align-content: center;
+    @media (orientation: landscape) and (max-width: 820px) {
+        width: 56pt;
+        padding: 24pt 0 16pt;
+    }	
     &--border {
         border-right: 1px solid $DARK-GREY;
     }
     @media (max-width: 600px) {
+        position: static;
         width: 100%;
-        height: 60px;
-        padding: 0;
-        left: 0;
-        right: 0;
-        grid-template-rows: none;
-        grid-template-columns: repeat(2, 1fr);
+        padding: 32pt 32pt 22pt;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        height: auto;
         &--border {
-            border-right: none;
-            border-bottom: 1px solid $DARK-GREY;
+            border: none;
         }
     }
+    @media (max-width: 375px) {
+        padding: 26pt 26pt 20pt;
+    }
+    @media (max-width: 320px) {
+        padding: 22pt 22pt 16pt;
+    }
     &__logo {
-    // fill: $MERGE-MAIN-COLOR;
-    fill: red;
-    width: 31px;
-    height: 40px;
+        fill: $MERGE-MAIN-COLOR;
+        width: 31px;
+        height: 40px;
+        @media (max-width: 600px) {
+            width: 24pt;
+            height: 32pt;
+        }
+        &--white {
+            @media (max-width: 600px) {
+                fill: $TEXT-COLOR;
+            }    
+        }
+    }
+    &__menu-link {
+        display: none;
+        font-family: $base-font;
+        font-size: 12pt;
+        color: $MERGE-MAIN-COLOR;
+        text-decoration: none;
+        letter-spacing: 0.8pt;
+        font-weight: 600;
+         @media (max-width: 600px) {
+            display: block;
+        }
     }
     &__logo-wrapper {
         align-self: start;
@@ -133,11 +172,6 @@ export default {
         text-decoration: none;
         outline: none;
         border: none;
-        @media (max-width: 600px) {
-            grid-column: 1;
-            grid-row: 1;
-            align-self: center;
-        }
     }
     &__social {
         @media (max-width: 600px) {
@@ -191,11 +225,12 @@ export default {
         height: 30px;
         width: 30px;
         position: relative;
+        @media (orientation: landscape) and (max-width: 820px) {
+            align-self: start;
+            margin-top: 15pt;
+        }
         @media (max-width: 600px) {
-            grid-column: 2;
-            animation-name: slideRight;
-            animation-duration: 0.5s;
-            animation-timing-function: ease-in-out;
+            display: none;
         }
     }
     &__tooltip {

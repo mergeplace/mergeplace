@@ -1095,6 +1095,13 @@
 	animation-fill-mode: both;
 }
 
+.animated04 {
+	-webkit-animation-duration: 400ms;
+	animation-duration: 400ms;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+}
+
 .animated08 {
 	-webkit-animation-duration: 800ms;
 	animation-duration: 800ms;
@@ -1114,6 +1121,8 @@
 	animation-duration: 0.3s;
 	-webkit-animation-fill-mode: both;
 	animation-fill-mode: both;
+	animation-timing-function: ease-in-out;
+	-webkit-animation-timing-function: ease-in-out;
 }
 
 .animated.infinite {
@@ -1121,9 +1130,19 @@
 	animation-iteration-count: infinite;
 }
 
+.animated.delay-02s {
+	-webkit-animation-delay: 0.2s;
+	animation-delay: 0.2s;
+}
+
 .animated.delay-03s {
 	-webkit-animation-delay: 0.3s;
 	animation-delay: 0.3s;
+}
+
+.animated.delay-04s {
+	-webkit-animation-delay: 0.4s;
+	animation-delay: 0.4s;
 }
 
 .animated.delay-05s {
@@ -1131,11 +1150,35 @@
 	animation-delay: 0.5s;
 }
 
+.animated.delay-06s {
+	-webkit-animation-delay: 0.6s;
+	animation-delay: 0.6s;
+}
+
+.animated.delay-07s {
+	-webkit-animation-delay: 0.7s;
+	animation-delay: 0.7s;
+}
+
+.animated.delay-08s {
+	-webkit-animation-delay: 0.8s;
+	animation-delay: 0.8s;
+}
+
+.animated.delay-09s {
+	-webkit-animation-delay: 0.9s;
+	animation-delay: 0.9s;
+}
+
 .animated.delay-1s {
 	-webkit-animation-delay: 1s;
 	animation-delay: 1s;
 }
 
+.animated.delay-11s {
+	-webkit-animation-delay: 1.1s;
+	animation-delay: 1.1s;
+}
 .animated.delay-2s {
 	-webkit-animation-delay: 2s;
 	animation-delay: 2s;
@@ -1180,6 +1223,42 @@
 	-webkit-animation-duration: 3s;
 	animation-duration: 3s;
 }
+
+.animated.d02 {
+	-webkit-animation-duration: 0.2s;
+	animation-duration: 0.2s;
+}
+
+.animated.d04 {
+	-webkit-animation-duration: 0.4s;
+	animation-duration: 0.4s;
+}
+
+.animated.d05 {
+	-webkit-animation-duration: 0.5s;
+	animation-duration: 0.5s;
+}
+
+.animated.d06 {
+	-webkit-animation-duration: 0.6s;
+	animation-duration: 0.6s;
+}
+
+.animated.d07 {
+	-webkit-animation-duration: 0.7s;
+	animation-duration: 0.7s;
+}
+
+.animated.d08 {
+	-webkit-animation-duration: 0.8s;
+	animation-duration: 0.8s;
+}
+
+.animated.d09 {
+	-webkit-animation-duration: 0.9s;
+	animation-duration: 0.9s;
+}
+
 
 @keyframes fadeInBubble {
 	0% {
@@ -1301,27 +1380,6 @@
 	}
 }
 
-@media (max-width: 600px) {
-	.animated {
-		-webkit-animation: unset !important;
-		animation: unset !important;
-		-webkit-transition: none !important;
-		transition: none !important;
-	}
-	.animatedOut {
-		-webkit-animation: unset !important;
-		animation: unset !important;
-		-webkit-transition: none !important;
-		transition: none !important;
-	}
-	.animatedNav {
-		-webkit-animation: unset !important;
-		animation: unset !important;
-		-webkit-transition: none !important;
-		transition: none !important;
-	}
-}
-
 @-webkit-keyframes autofill {
 	to {
 		color: $TEXT-COLOR;
@@ -1334,4 +1392,50 @@
 		color: $TEXT-COLOR;
 		background: $BUTTON-COLOR;
 	}
+}
+
+@media (max-width: 600px) {
+	* {
+		-webkit-animation: unset !important;
+		animation: unset !important;
+		-webkit-transition: none !important;
+		transition: none !important;
+	}
+	.animated {
+		-webkit-animation: unset !important;
+		animation: unset !important;
+		-webkit-transition: none !important;
+		transition: none !important;
+	}
+}
+
+@keyframes type{
+    from { width: 0; }
+}
+ 
+@-webkit-keyframes type{
+    from { width: 0; }
+}
+
+@keyframes heightDown {
+	0% {
+		height: 0%;
+	}
+	100% {
+		height: auto;
+	}
+}
+
+@-webkit-keyframes heightDown {
+	0% {
+		height: 0%;
+	}
+	100% {
+		height: auto;
+	}
+}
+
+.heightDown {
+	-webkit-animation-name: heightDown;
+	animation-name: heightDown;
 }

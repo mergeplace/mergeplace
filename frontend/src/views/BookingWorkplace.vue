@@ -25,14 +25,93 @@
 		leave-active-class="animated faster fadeOut">
     <day-card v-if='visible.dayCard' :price='price' @closeCard='closeCard'></day-card>
     </transition>
-	<logo></logo>
+	<logo class='booking-workplace__logo'></logo>
 	<section class="booking-workplace" :style="onStyleAnimate">
 		<button-close-mini class="booking-workplace__close" @click.native='goBack'></button-close-mini>
-		<div class="booking-workplace__inner booking-workplace__inner--back-button">
+		<div class="booking-workplace__inner booking-workplace__inner--back-button" @click='goBack'>
 			<button-back class="booking-workplace__button-back" @click.native='goBack'></button-back>
-			<p class="booking-workplace__button-text">go back</p>
+			<p class="booking-workplace__button-text" @click.native='goBack'>go back</p>
 		</div>
-		<h1 class="booking-workplace__title">Booking of the	workplace {{ tariff }}</h1>
+		<h1 class="booking-workplace__title">Booking of the	workplace</h1>
+		<div class="workplace-choice-mobile__wrapper">
+			<label for='book-month-mobile' class="workplace-choice-mobile">
+				<input id='book-month-mobile' 
+                    type="radio" 
+                    name='booking-type-mobile' 
+                    form='booking-form' 
+                    class="workplace-choice-mobile__input"
+					value="month"
+                    v-model="tariff"
+                    checked>
+				<div class="workplace-choice-mobile__inner">
+					<div class="workplace-choice-mobile__check">
+						<div class="workplace-choice-mobile__check-dot"></div>
+					</div>
+					<div class="workplace-choice-mobile__col">
+						<p class="workplace-choice-mobile__title">Month</p>
+						<p class="workplace-choice-mobile__resident">Resident card</p>
+					</div>
+				</div>
+				<div class="workplace-choice-mobile__inner workplace-choice-mobile__inner--price">
+					<p class="workplace-choice-mobile__price">{{ price.month }}</p>
+					<a href='#' class="workplace-choice-mobile__link-img" @click.prevent="visible.residentCard = true">
+						<svg class="workplace-choice-mobile__img">
+							<use xlink:href='#infoborder' />
+						</svg>
+					</a>
+				</div>
+			</label>
+			<label for='book-week-mobile' class="workplace-choice-mobile">
+				<input id='book-week-mobile' 
+                    type="radio" 
+                    name='booking-type-mobile' 
+                    form='booking-form' 
+                    class="workplace-choice-mobile__input"
+					value="week"
+                    v-model="tariff">
+				<div class="workplace-choice-mobile__inner">
+					<div class="workplace-choice-mobile__check">
+						<div class="workplace-choice-mobile__check-dot"></div>
+					</div>
+					<div class="workplace-choice-mobile__col">
+						<p class="workplace-choice-mobile__title">Week</p>
+					</div>
+				</div>
+				<div class="workplace-choice-mobile__inner workplace-choice-mobile__inner--price">
+					<p class="workplace-choice-mobile__price">{{ price.week }}</p>
+					<a href='#' class="workplace-choice-mobile__link-img" @click.prevent="visible.weekCard = true">
+						<svg class="workplace-choice-mobile__img">
+							<use xlink:href='#infoborder' />
+						</svg>
+					</a>
+				</div>
+			</label>
+			<label for='book-day-mobile' class="workplace-choice-mobile">
+				<input id='book-day-mobile' 
+                    type="radio" 
+                    name='booking-type-mobile' 
+                    form='booking-form' 
+                    class="workplace-choice-mobile__input"
+					value="day"
+                    v-model="tariff">
+				<div class="workplace-choice-mobile__inner">
+					<div class="workplace-choice-mobile__check">
+						<div class="workplace-choice-mobile__check-dot"></div>
+					</div>
+					<div class="workplace-choice-mobile__col">
+						<p class="workplace-choice-mobile__title">Day</p>
+					</div>
+				</div>
+				<div class="workplace-choice-mobile__inner workplace-choice-mobile__inner--price">
+					<p class="workplace-choice-mobile__price">{{ price.day }}</p>
+					<a href='#' class="workplace-choice-mobile__link-img" @click.prevent="visible.dayCard = true">
+						<svg class="workplace-choice-mobile__img">
+							<use xlink:href='#infoborder' />
+						</svg>
+					</a>
+				</div>
+			</label>
+		</div>
 		<div class="booking-workplace__inner booking-workplace__inner--choice">
 			<label for='book-month' class="workplace-choice">
 				<input id='book-month' 
@@ -106,8 +185,8 @@
                             type="text" 
                             class="booking-workplace__input" 
                             :class="{inputError: errors.name, greenBorder: !errors.name}"
-                            placeholder="Andrey Malishko"
-							@blur="checkName"
+                            placeholder="Andrey Malishko"	
+							@blur="checkAll"
                             v-model.trim="form.name">
 							<transition 
 								name="custom-classes-transition"
@@ -124,7 +203,7 @@
                             class="booking-workplace__input" 
                             :class="{inputError: errors.phone, greenBorder: !errors.phone}"
                             placeholder="+38 (000) 000 00-00"
-							@blur="checkPhone"
+							@blur="checkAll"
                             v-model.trim="form.phone">
 						<transition 
 							name="custom-classes-transition"
@@ -144,7 +223,7 @@
                             class="booking-workplace__input booking-workplace__input--required" 
                             :class="{inputError: errors.email, greenBorder: !errors.email}"
                             placeholder="example@mail.com"
-							@blur="checkEmail"
+							@blur="checkAll"
                             v-model.trim="form.email">
 						<transition 
 							name="custom-classes-transition"
@@ -167,14 +246,16 @@
 		</div>
 		<p class="booking-workplace__description">* — Required fields</p>
 		<div class="booking-workplace__inner booking-workplace__inner--price">
-			<p class="booking-price">Price:
+			<p class="booking-price booking-workplace__price">Price:
 				<span class="booking-price__sum">{{ animatedNumber }}</span>
 			</p>
 			<button-apply 
                 :disabled='showSubmit'
-                @click.native="testWpApi">
+                @click.native="sendForm"
+				class="booking-workplace__apply">
             </button-apply>
 		</div>
+		<button class="booking-workplace__cancel" @click.prevent='goBack'>CANCEL</button>
 	</section>
     <svg style="display: none">
         <symbol id='infoborder' width="16px" height="16px" viewBox="0 0 24 24">
@@ -227,7 +308,7 @@ export default {
 				phone: null,
 				email: null,
 				career: null,
-				picked: null
+				picked: this.tariff
 			},
 			validStatus: {
 				name: false,
@@ -259,29 +340,28 @@ export default {
 			this.visible.dayCard = false;
 			this.visible.weekCard = false;
 		},
+		checkAll() {
+			this.checkName();
+			this.checkPhone();
+			this.checkEmail();
+		},
 		checkName() {
-			if (!this.form.name) {
+			if (this.form.name && !this.validName(this.form.name) && this.form.phone && this.form.email) {
 				this.errors.name = 'your name and surname';
-			} else if (!this.validName(this.form.name)) {
-				this.errors.name = 'correct name and surname';
 			} else {
 				this.errors.name = null;
 			}
 		},
 		checkPhone() {
-			if (!this.form.phone) {
+			if (this.form.phone && !this.validPhone(this.form.phone) && !this.validFormatPhone(this.form.phone) && this.form.name && this.form.email) {
 				this.errors.phone = 'your phone';
-			} else if (!this.validPhone(this.form.phone)) {
-				this.errors.phone = 'correct phone';
 			} else {
 				this.errors.phone = null;
 			}
 		},
 		checkEmail() {
-			if (!this.form.email) {
+			if (this.form.email && !this.validEmail(this.form.email) && this.form.name && this.form.phone) {
 				this.errors.email = 'your e-mail';
-			} else if (!this.validEmail(this.form.email)) {
-				this.errors.email = 'correct e-mail';
 			} else {
 				this.errors.email = null;
 			}
@@ -293,28 +373,23 @@ export default {
 		},
 		validPhone(phone) {
 			// eslint-disable-next-line
-			let re = /^((((\+?)+(3?)+8)?)+(((\(|\-)?)+0+([0-9]){2}(\)|\-)?)+(\-?)+(([0-9]){3})+(\-?)+(([0-9]){2})+(\-?)+(([0-9]){2}))$/;
+			let re = /^((((\+?)+(3?)+8)?)0([0-9]){2})(([0-9]){3})(([0-9]){2})(([0-9]){2})$/;
+			return re.test(phone);
+		},
+		validFormatPhone(phone) {
+			let re = /^(\+38\s\(0(([0-9]){2})\)\s(([0-9]){3})\s(([0-9]){2})-(([0-9]){2}))$/;
 			return re.test(phone);
 		},
 		validName(name) {
 			// eslint-disable-next-line
-			let re = /^((([A-ZА-ЯА-ЩЬЮЯЇІЄҐ])+([a-zA-Zа-яА-Яа-щА-ЩЬьЮюЯяЇїІіЄєҐґ]{1,30}))+\s+(([A-ZА-ЯА-ЩЬЮЯЇІЄҐ])+([a-zA-Zа-яА-Яа-щА-ЩЬьЮюЯяЇїІіЄєҐґ]){1,30}))$/;
+			let re = /^([A-ZА-ЯА-ЩЬЮЯЇІЄҐ])+([a-zA-Zа-яА-Яа-щА-ЩЬьЮюЯяЇїІіЄєҐґ]{1,40})((\s?)([a-zA-Zа-яА-Яа-щА-ЩЬьЮюЯяЇїІіЄєҐґ]{1,40})){1,3}?$/;
 			return re.test(name);
 		},
 		sendForm() {
 			let params = JSON.stringify(this.form);
-			http.post('https://jsonplaceholder.typicode.com/posts', params)
-			.then(()=> {
-				this.bookingDone = true;
-			})
-			.catch(e => {
-				this.errors.arr.push(e);
-			});
-		},
-		testWpApi() {
-			http.get('http://mergeplace.test/wp-json/wp/v2/pages/')
-			.then((хуй)=> {
-				console.log(хуй)
+			http.post('http://mergeplace.test/wp-json/', params)
+			.then(data=> {
+				window.console.log(data)
 			})
 			.catch(e => {
 				this.errors.arr.push(e);
@@ -330,7 +405,7 @@ export default {
 				let val = this.$store.state.tariff;
 				let price = this.price[val];
 				TweenLite.to(this.$data, 0.5, { tweenedNumber: price });
-				return this.form.picked = val;
+				return val;
 			},
 			set (value) {
 				this.$store.commit('change', value)
@@ -358,6 +433,41 @@ export default {
 			} else {
 				return true;
 			}
+		},
+		formatNumber() {
+			if(this.validPhone(this.form.phone)) {
+				let phone = this.form.phone,
+				lenPhone = phone.length,
+				arr = phone.split('');
+				if( lenPhone == 10 ){
+					arr.splice(0,"", "+38 ");
+					arr.splice(1,"", "(");
+					arr.splice(5,"", ") ");
+					arr.splice(9,"", " ");
+					arr.splice(12,"", "-");
+				} else if (lenPhone == 11) {
+					arr.splice(0,"", "+3");
+					arr.splice(2,"", " ");
+					arr.splice(3,"", "(");
+					arr.splice(7,"", ") ");
+					arr.splice(11,"", " ");
+					arr.splice(14,"", "-");
+				} else if (lenPhone == 12) {
+					arr.splice(0,"", "+");
+					arr.splice(4,"", " ");
+					arr.splice(5,"", "(");
+					arr.splice(8,"", ") ");
+					arr.splice(12,"", " ");
+					arr.splice(15,"", "-");
+				} else if (lenPhone == 13) {
+					arr.splice(3,"", " ");
+					arr.splice(4,"", "(");
+					arr.splice(8,"", ") ");
+					arr.splice(12,"", " ");
+					arr.splice(15,"", "-");
+				}
+				return arr.join('');
+			}
 		}
 	},
 	watch: {
@@ -370,9 +480,13 @@ export default {
 			}
 		},
 		'form.phone'() {
-			if (this.form.phone && this.validPhone(this.form.phone)) {
+			if (this.form.phone && (this.validPhone(this.form.phone) || this.validFormatPhone(this.form.phone))) {
+				if(!this.validFormatPhone(this.form.phone)) {
+					this.form.phone = this.formatNumber;
+				}
 				this.errors.phone = null;
 				this.validStatus.phone = true;
+				
 			} else {
 				this.validStatus.phone = false;
 			}
@@ -417,8 +531,14 @@ export default {
 		min-width: 430px;
 	}
 	@media (max-width: 600px) {
+		padding: 0;
 		flex: 0 0 100%;
 		align-self: flex-start;
+	}
+	&__logo {
+		@media (max-width: 600px) {
+			display: none;
+		}
 	}
 	&__wrapper {
 		width: 100%;
@@ -426,8 +546,10 @@ export default {
 		@extend %flex-row-c;
 		align-items: center;
 		@media (max-width: 600px) {
-			padding: 2rem;
-			padding-top: 3rem;
+			padding: 32pt;
+		}
+		@media (max-width: 320px) {
+			padding: 24pt;
 		}
 	}
 	&__close {
@@ -440,9 +562,6 @@ export default {
 			display: none;
 		}
 	}
-	&__button-back {
-		margin-right: 1rem;
-	}
 	&__button-text {
 		text-transform: uppercase;
 		font-family: $base-font;
@@ -451,6 +570,12 @@ export default {
 		letter-spacing: 0.7px;
 		text-align: left;
 		color: $GREY;
+		padding-left: 1rem;
+		cursor: pointer;
+		@media (max-width: 600px) {
+			font-size: 0.8rem;
+			font-weight: 700;
+		}
 	}
 	&__validate {
 		font-family: $base-font;
@@ -482,8 +607,8 @@ export default {
 			padding-bottom: 1.375rem;
 			border-bottom: 1px solid $MIDDLE-GREY;
 			@media (max-width: 600px) {
-				justify-content: center;
-				padding: 2rem 0;
+				border: none;
+				padding-bottom: 24pt;
 			}
 		}
 		&--choice {
@@ -491,8 +616,8 @@ export default {
 			align-items: center;
 			padding-bottom: 30px;
 			border-bottom: 1px solid $BUTTON-COLOR;
-			@media (max-width: 460px) {
-				flex-direction: column;
+			@media (max-width: 480px) {
+				display: none;
 			}
 		}
 		&--form {
@@ -503,8 +628,11 @@ export default {
 			&:last-child {
 				padding-bottom: 0;
 			}
-			@media (max-width: 550px) {
+			@media (max-width: 600px) {
 				flex-direction: column;
+			}
+			@media (max-width: 480px) {
+				padding: 0;
 			}
 		}
 		&--price {
@@ -512,21 +640,35 @@ export default {
 			align-items: center;
 			padding-top: 26px;
 			border-top: 1px solid $BUTTON-COLOR;
+			@media (max-width: 600px) {
+				margin-bottom: 16pt;
+			}
+			@media (max-width: 480px) {
+				padding: 0;
+				border: none;
+				justify-content: center;
+			}
 		}
 	}
-
 	&__title {
 		font-family: $title-font;
-		font-size: 40px;
+		font-size: 2.5rem;
 		font-weight: 500;
 		text-align: left;
 		color: $TEXT-COLOR;
 		margin: 24px 0 28px 0;
 		@media (max-width: 600px) {
+			font-size: 2rem;
 			text-align: center;
+			margin: 0 0 22pt;
+		}
+		@media (max-width: 480px) {
+			text-align: left;
+		}
+		@media (max-width: 320px) {
+			font-size: 1.8rem;
 		}
 	}
-
 	&__col {
 		@extend %flex-col;
 		&--form {
@@ -537,9 +679,12 @@ export default {
 	&__input-wrapper {
 		@extend %flex-col;
 		width: 48%;
-		@media (max-width: 550px) {
+		@media (max-width: 600px) {
 			width: 100%;
-			margin-bottom: 1rem;
+			margin-bottom: 1.5rem;
+		}
+		@media (max-width: 480px) {
+			margin-bottom: 25pt;
 		}
 	}
 	&__description {
@@ -549,21 +694,30 @@ export default {
 		text-align: left;
 		color: $GREY;
 		padding-bottom: 1.5rem;
+		@media (max-width: 480px) {
+			display: none;
+		}
 	}
 
 	&__input {
 		width: 100%;
-		height: 40px;
 		background-color: $BUTTON-COLOR;
 		border: none;
 		outline: none;
-		text-indent: 16px;
 		font-family: $base-font;
 		font-size: 10px;
 		font-weight: 500;
 		text-align: left;
 		color: $TEXT-COLOR;
 		border-radius: 3px;
+		padding: 12px 16px;
+		line-height: 1;
+		@media (max-width: 480px) {
+			padding: 12pt 16pt;
+			font-size: 11pt;
+			font-weight: 400;
+			line-height: 1;
+		}
 		&:-webkit-autofill,
 		&:-webkit-autofill:hover,
 		&:-webkit-autofill:focus,
@@ -572,24 +726,64 @@ export default {
 			animation-fill-mode: both;
 		}
 		&::placeholder {
-			text-indent: 16px;
 			color: $GREY;
 			font-size: 10px;
 			font-weight: 500;
 			font-family: $base-font;
+			line-height: 1;
+			@media (max-width: 480px) {
+				padding-top: 2pt;
+				font-size: 11pt;
+				line-height: 1;
+				font-weight: 400;
+			}
 		}
 	}
-
 	&__label {
 		text-transform: uppercase;
 		font-family: $base-font;
-		font-size: 8px;
+		font-size: 0.5rem;
 		font-weight: bold;
 		text-align: left;
 		color: $TEXT-COLOR;
 		@extend %flex-col-fs;
 		align-items: flex-start;
 		margin-bottom: 11px;
+		@media (max-width: 600px) {
+			font-weight: 500;
+			font-size: 9pt;
+			margin-bottom: 10pt;
+		}
+	}
+	&__price {
+		@media (max-width: 480px) {
+			display: none;
+		}
+	}
+	&__apply {
+		@media (max-width: 480px) {
+			width: 100%;
+			align-self: center;
+		}
+	}
+	&__cancel {
+		padding: 1rem 2rem;
+		width: 100%;
+		font-family: $base-font;
+		font-size: 10pt;
+		text-transform: uppercase;
+		font-weight: bold;
+		text-align: center;
+		outline: none;
+		border: none;
+		color: $GREY;
+		background-color: transparent;
+		align-self: center;
+		display: none;
+		letter-spacing: 0.6pt;
+		@media (max-width: 600px) {
+			display: block;
+		}
 	}
 }
 .workplace-choice {
@@ -605,7 +799,7 @@ export default {
 	@media (max-width: 600px) {
 		width: 100%;
 	}
-	@media (max-width: 460px) {
+	@media (max-width: 480px) {
 		margin-right: 0;
 		margin-bottom: 1rem;
 	}
@@ -667,7 +861,6 @@ export default {
 		color: $GREY;
 		text-decoration: none;
 	}
-
 	&__price {
 		font-family: $base-font;
 		font-size: 10px;
@@ -723,6 +916,98 @@ export default {
 			text-align: left;
 			color: $GREY;
 		}
+	}
+}
+.workplace-choice-mobile {
+	@extend %flex-row-sb;
+	align-items: baseline;
+	position: relative;
+	width: 100%;
+	flex-wrap: nowrap;
+	padding: 16pt 0;
+	border-bottom: 1pt solid $MIDDLE-GREY-OPACITY;
+	&__wrapper {
+		display: none;
+		width: 100%;
+		@media (max-width: 480px) {
+			display: block;
+		}
+	}
+	&__inner {
+		@extend %flex-row;
+		flex-wrap: nowrap;
+		align-items: flex-start;
+		&--price {
+			align-items: center;
+		}
+	}
+	&__title {
+		font-family: $base-font;
+		font-size: 1.3rem;
+		font-weight: 600;
+		color: $TEXT-COLOR;
+	}
+	&__resident {
+		font-family: $base-font;
+		font-size: 0.7rem;
+		font-weight: 500;
+		color: $GREY-BORDER-COLOR;
+		padding-top: 3pt;
+	}
+	&__link-img {
+		padding: 0;
+		@extend %flex-row-c;
+		align-items: center;
+	}
+	&__img {
+		fill: $TEXT-COLOR;
+		width: 16pt;
+		height: 16pt;
+	}
+	&__price {
+		font-family: $base-font;
+		font-size: 0.8rem;
+		font-weight: 600;
+		color: $TEXT-COLOR;
+		letter-spacing: 0.7pt;
+		margin-right: 12pt;
+		&::after {
+			content: ' UAH';
+		}
+	}
+	&__input {
+		opacity: 0;
+		position: absolute;
+		left: 4pt;
+		top: 20pt;
+		z-index: -10;
+		outline: none;
+		&:checked + .workplace-choice-mobile__inner .workplace-choice-mobile__check{
+			background-color: $MERGE-MAIN-COLOR;
+			border-color: $MERGE-MAIN-COLOR;
+		}
+		&:checked + .workplace-choice-mobile__inner .workplace-choice-mobile__check-dot {
+			opacity: 1;
+		}
+	}
+	&__check {
+		height: 16pt;
+		width: 16pt;
+		background-color: $DARK-GREY;
+		border-radius: 50%;
+		border: 1pt solid $MIDDLE-GREY;
+		@extend %flex-row-c;
+		align-items: center;
+		transition: color ease-in-out 0.2s;
+		margin-right: 15pt;
+	}
+	&__check-dot {
+		height: 8pt;
+		width: 8pt;
+		background-color: $MAIN-DARK-COLOR;
+		border-radius: 50%;
+		opacity: 0;
+		transition: opacity ease-in-out 0.2s;
 	}
 }
 </style>

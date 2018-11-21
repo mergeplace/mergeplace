@@ -1,12 +1,53 @@
 <template>
 
 <section id="hello" class="hello">
-	<h1 class="hello__title">Hello!<br>We’re
-		<span class="hello__logo">MERGE</span>
-	</h1>
-	<h2 class="hello__subtitle">{{ хуй }}
+    <div class="hello__title-wrapper">
+        <h1 class="hello__title">
+            <vue-typer
+                text='Hello!'
+                :repeat='0'
+                :shuffle='false'
+                initial-action='typing'
+                :pre-type-delay='700'
+                :type-delay='200'
+                :erase-on-complete='false'
+                caret-animation='smooth'
+                @typed='onTyped'
+            ></vue-typer>
+        </h1>
+        <h1 class="hello__title hello__title--second">
+            <span class="hello__title hello__title--nowrap">
+                <vue-typer
+                    text="We’re"
+                    :repeat='0'
+                    :shuffle='false'
+                    initial-action='typing'
+                    :pre-type-delay='700'
+                    :type-delay='200'
+                    :erase-on-complete='false'
+                    caret-animation='smooth'
+                    v-if='secondString'
+                    @typed='onTypedSecond'
+                ></vue-typer>
+            </span>
+            <span class="hello__logo">
+                <vue-typer
+                text="MERGE"
+                :repeat='0'
+                :shuffle='false'
+                initial-action='typing'
+                :pre-type-delay='700'
+                :type-delay='200'
+                :erase-on-complete='false'
+                caret-animation='smooth'
+                v-if='thirdString'
+            ></vue-typer>
+            </span>
+        </h1>
+    </div>
+	<h2 class="hello__subtitle animated d05 delay-02s fadeInLeft">COWORKING IN THE CENTRE OF KREMENCHUK
 	</h2>
-	<div class="hello-link__wrapper">
+	<div class="hello-link__wrapper animated d06 delay-03s fadeInLeft">
 		<a href="#" class="hello-link hello-link--how-get">
 			<svg class='hello-link__img'>
 				<use xlink:href='#videocamera' />
@@ -22,7 +63,7 @@
 			</p>
 		</a>
 	</div>
-	<p class="hello__text">We offer
+	<p class="hello__text animated d05 delay-04s fadeInLeft">We offer
 		<a class='hello__text--link'>comfortable conditions</a>
 		for remote work and we are dreaming to organize
 		<a href='#' class='hello__text--link'>Merge Community</a>
@@ -32,11 +73,10 @@
 		<a href='#' class='hello__text--link'>lectures and workshops</a>
 		in various specialties.
 	</p>
-	<div class="hello__button-wrapper">
-		<button-membership @click.native='becomeMember'></button-membership>
-		<button-book-room @click.native='meetingRoom'></button-book-room>
+	<div class="hello__button-wrapper animated d05 delay-05s fadeInLeft">
+		<button-membership class='hello__button' @click.native='becomeMember'></button-membership>
+		<button-book-room class='hello__button' @click.native='meetingRoom'></button-book-room>
 	</div>
-	<social-networks class="hello__social"></social-networks>
     <svg style="display: none">
        <symbol id='videocamera' viewBox="0 0 24 24">
         <path d="M17,10.5 L17,7 C17,6.45 16.55,6 16,6 L4,6 C3.45,6 3,6.45 3,7 L3,17 C3,17.55 3.45,18 4,18 L16,18 C16.55,18 17,17.55 17,17 L17,13.5 L21,17.5 L21,6.5 L17,10.5 L17,10.5 Z"
@@ -52,29 +92,36 @@
 </template>
 
 <script>
+import { VueTyper } from 'vue-typer'
 import ButtonMembership from '@/components/buttons/ButtonMembership.vue';
 import ButtonBookRoom from '@/components/buttons/ButtonBookRoom.vue';
-import SocialNetworks from '@/components/SocialNetworks.vue';
 
 export default {
     name: 'Hello',
     components: {
     ButtonMembership,
     ButtonBookRoom,
-    SocialNetworks
+    VueTyper
   },
-  data(){
-      return {
-          "хуй":"COWORKING IN THE CENTRE OF KREMENCHUK"
-      }
-  }, 
+  data() {
+    return {
+        secondString: false,
+        thirdString: false
+    }
+  },
   methods: {
-      meetingRoom() {
-          this.$router.push('/meeting-room');
-      },
-      becomeMember() {
-          this.$router.push('/booking-workplace');
-      }
+    onTyped() {
+        this.secondString = true;
+    },
+    onTypedSecond() {
+        this.thirdString = true;
+    },
+    meetingRoom() {
+        this.$router.push('/meeting-room/calendar');
+    },
+    becomeMember() {
+        this.$router.push('/booking-workplace');
+    }
   }
 };
 </script>
@@ -82,7 +129,7 @@ export default {
 <style lang="scss">
 @import '../assets/scss/style.scss';
 .hello {
-    padding: 3rem 0 3rem 112px;
+    padding: 3rem 3rem 3rem 112px;
     width: 100%;
     grid-column: 2;
     display: grid;
@@ -98,91 +145,161 @@ export default {
     align-content: center;
     justify-items: start;
     justify-content: start;
-    @media (max-width: 810px) {
-        padding-right: 10%;
+    @media (max-width: 660px) {
+        grid-template-columns: 5% auto auto;
+        padding: 1rem 1rem 1rem 112px;
+    }
+    @media (orientation: landscape) and (max-width: 820px) {
+        grid-template-columns: 5% auto auto;
+        padding: 0 0 0 56pt;
     }
     @media (max-width: 600px) {
-        grid-template-rows: repeat(6, auto);
-        padding: 5rem 1rem 3rem 1rem;
-        grid-template-areas:
-        'title title    '
-        'subtitle subtitle '
-        'link link     '
-        'text text     '
-        'btn btn      '
-        'social social';
-        justify-items: center;
-        justify-content: center;
-        animation-name: slideDown;
-        animation-duration: 0.5s;
-        animation-timing-function: ease-in-out;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding: 0 32pt 32pt;
+        flex: 1 0 100%;
     }
-    @media (min-width: 600px) {
-        grid-template-rows: repeat(6, auto);
-        grid-template-areas:
-        '. title    '
-        '. subtitle '
-        '. link     '
-        '. text     '
-        '. btn      '
-        '. social   ';
+    @media (max-width: 375px) {
+        padding: 0 26pt 26pt;
+    }
+    @media (max-width: 320px) {
+        padding: 0 22pt 22pt;
     }
     &__title {
-        grid-area: title;
-		@extend %flex-row;
+        @extend %flex-row;
+        align-items: center;
 		justify-content: flex-start;
         margin: 0;
         font-size: 5rem;
         text-align: left;
 		font-family: $title-font;
 		white-space: nowrap;
-        color: white;
+        color: $TEXT-COLOR;
         font-weight: 500;
-        @media (min-width: 600px) and (max-width: 810px) {
+        flex-wrap: nowrap;
+        .vue-typer {
+            font-family: $title-font;
+            font-weight: 500;
+            .custom.char {
+                color: $TEXT-COLOR;
+            }
+            .custom.caret {
+                background-color: $TEXT-COLOR;
+            }
+        }
+        @media (max-width: 840px) {
             flex-direction: column;
             align-items: flex-start;
-            text-align: left;
         }
         @media (max-width: 600px) {
-            flex-direction: column;
-            font-size: 3.5rem;
-            align-items: center;
-            text-align: center;
+            text-align: left;
             width: 100%;
+        }
+        @media (max-width: 540px) {
+            font-size: 3.6rem;
+            line-height: 1.2;
+        }
+        @media (max-width: 375px) {
+            font-size: 3.2rem;
+        }
+        @media (max-width: 320px) {
+            font-size: 2.8rem;
+        }
+        &--nowrap {
+            flex-direction: row;
+            align-items: center;
+            flex-wrap: nowrap;
+        }
+    }
+    &__title-wrapper {
+        @extend %flex-col;
+        grid-area: title;
+        @media (max-width: 600px) {
+           margin-bottom: 10pt;
+        }
+        @media (max-width: 500px) {
+           margin-bottom: 24pt;
+        }
+        @media (max-width: 375px) {
+           margin-bottom: 16pt;
+        }
+        @media (max-width: 320px) {
+           margin-bottom: 10pt;
+        }
+    }
+    &__title-wrap {
+        display: none;
+        @media (max-width: 840px) {
+            display: block;
         }
     }
     &__logo {
         align-self: flex-end;
         margin: 0;
+        padding-left: 3rem;
         font-size: 5rem;
         text-align: left;
         font-family: $title-font;
         font-weight: 500;
         color: $MERGE-MAIN-COLOR;
 		letter-spacing: 20px;
-		white-space: normal;
+		white-space: nowrap;
+        @extend %flex-row;
+        flex-wrap: nowrap;
+        .vue-typer {
+            font-family: $title-font;
+            font-weight: 500;
+            .custom.char {
+                color: $MERGE-MAIN-COLOR;
+            }
+            .custom.caret {
+                background-color: $TEXT-COLOR;
+            }
+        }
+        @media (max-width: 840px) {
+            align-self: flex-start;
+            padding-left: 0;
+            padding-right: 2rem;
+        }
         @media (max-width: 600px) {
             width: 100%;
-            font-size: 3.5rem;
-            text-align: center;
+            text-align: left;
+            font-weight: 700;
+            letter-spacing: 8pt;
+        }
+        @media (max-width: 540px) {
+            font-size: 3.6rem;
+            line-height: 1.2;
+        }
+        @media (max-width: 375px) {
+            font-size: 3.2rem;
+        }
+        @media (max-width: 320px) {
+            font-size: 2.8rem;
         }
     }
-
     &__subtitle {
         margin: 0;
         grid-area: subtitle;
         text-transform: uppercase;
         font-family: $base-font;
         color: white;
-        font-size: 17px;
+        font-size: 1.1rem;
         font-weight: 700;
         white-space: nowrap;
-        @media (max-width: 460px) {
+        @media (max-width: 600px) {
+            font-size: 0.8rem;
+            line-height: 2;
+            font-weight: 600;
+            letter-spacing: 0.8pt;
             white-space: normal;
-            text-align: center;
+        }
+        @media (max-width: 320px) {
+            font-size: 0.7rem;
         }
     }
-
     &__text {
         max-width: 45%;
         min-width: 553px;
@@ -200,6 +317,13 @@ export default {
             min-width: fit-content;
             width: 100%;
         }
+        @media (max-width: 600px) {
+            padding: 2rem 0;
+            border: none
+        }
+        @media (max-width: 500px) {
+            display: none
+        }
         &--link {
             text-decoration: none;
             color: $TEXT-LINK-COLOR;
@@ -209,45 +333,23 @@ export default {
     &__button-wrapper {
         @extend %flex-row;
         grid-area: btn;
-        .button-membership {
-            margin-right: 2rem;
-        }
-        @media (max-width: 460px) {
+        @media (max-width: 540px) {
            flex-direction: column;
            width: 100%;
-            .button-membership,
-            .button-book-room {
-                width: 100%;
-            }
-            .button-membership {
-                margin-right: 0;
-                margin-bottom: 2rem;
-            }
+           flex: 1 0 100%;
+           justify-content: flex-end;
         }
     }
-    &__social {
-        display: none;
-        @media (max-width: 600px) {
-            padding-top: 2rem;
-            display: grid;
-            grid-template-columns: repeat(3, auto);
-            grid-column-gap: 3rem;
-            align-items: center;
-            grid-area: social;
-        }
-        .social-networks__link {
-            @media (max-width: 600px) {
-                width: 42px;
-                height: 42px;
+    &__button {
+        &:first-child {
+            margin-right: 2rem;
+            @media (max-width: 540px) {
+                margin: 0 0 16pt;
             }
         }
-        .social-networks__img {
-            @media (max-width: 600px) {
-                width: 32px;
-                height: 32px;
-            }
+        @media (max-width: 540px) {
+            width: 100%;
         }
-        
     }
 }
 
@@ -257,21 +359,30 @@ export default {
 	grid-template-columns: repeat(2, auto);
 	justify-items: start;
 	align-items: center;
-	grid-column-gap: 0.6em;
+	grid-column-gap: 0.6rem;
 	border-radius: 3px;
 	border: solid 2.5px transparent;
     padding: 4px 6px;
     transition: border-color ease-in-out 0.1s;
-	@media (max-width: 460px) {
-		grid-template-columns: 2rem auto;
-		padding-left: 2rem;
-		width: 100%;
+	@media (max-width: 600px) {
+        grid-column-gap: 9pt;
+        width: 100%;
+        justify-content: start;
 		&:first-child {
-			margin-right: 0;
-			margin-bottom: 2rem;
+			margin-bottom: 14pt;
 		}
     }
-    @media (min-width: 601px) {
+    @media (max-width: 375px) {
+        &:first-child {
+            margin-bottom: 10pt;
+        }
+    }
+    @media (max-width: 320px) {
+        &:first-child {
+            margin-bottom: 6pt;
+        }
+    }
+    @media (min-width: 600px) {
         &:hover .hello-link__text,
         &:hover .hello-link__img {
             color: $MERGE-MAIN-COLOR;
@@ -287,20 +398,28 @@ export default {
 		fill: $MERGE-DARK-COLOR;
 	}
 	&__wrapper {
-		justify-self: start;
+        justify-self: start;
+        position: relative;
+        left: -10px;
 		grid-area: link;
 		@extend %flex-row;
 		a:first-child {
 			margin-right: 2rem;
-		}
-		@media (max-width: 600px) {
-			justify-self: center;
-		}
-
-		@media (max-width: 460px) {
-			flex-direction: column;
-			width: 100%;
-		}
+        }
+        @media (max-width: 600px) {
+            flex-direction: column;
+            align-items: flex-start;
+            padding-top: 20pt;
+        }
+        @media (max-width: 540px) {
+            padding: 26pt 0 22pt;
+        }
+        @media (max-width: 375px) {
+            padding: 22pt 0 18pt;
+        }
+        @media (max-width: 320px) {
+            padding: 14pt 0 10pt;
+        }
 	}
 
 	&__img {
@@ -308,6 +427,10 @@ export default {
 		height: 16px;
         fill: $MERGE-SECONDARY-COLOR;
         transition: fill ease-in-out 0.1s;
+        @media (max-width: 600px) {
+            width: 16pt;
+            height: 16pt;
+        }
 	}
 
 	&__text {
@@ -318,6 +441,14 @@ export default {
 		font-weight: 700;
         white-space: nowrap;
         transition: color ease-in-out 0.1s;
+        @media (max-width: 600px) {
+           font-size: 0.8rem;
+           letter-spacing: 0.7pt
+        }
+        @media (max-width: 320px) {
+           font-size: 0.6rem;
+           letter-spacing: 0.5pt
+        }
 	}
 
 	&--how-get {

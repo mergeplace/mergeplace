@@ -1,15 +1,14 @@
 <template>
 <button class="button-map">
-	<p class='button-map__text'>
-		VIEW ON THE MAP
+	<p class='button-map__text'>VIEW ON THE MAP
 		<svg class='button-map__img'>
 			<use xlink:href='#arrow-right-up' />
 		</svg>
 	</p>
     <svg style="display: none">
-     <symbol id='arrow-right-up' width="12" height="12" viewBox=" 0 0 24 24">
-        <path fill-rule="evenodd" d="M10 6v1.6h5.272L6 16.872 7.128 18 16.4 8.728V14H18V6z" />
-      </symbol>
+        <symbol id='arrow-right-up' width="12" height="12" viewBox=" 0 0 24 24">
+            <path fill-rule="evenodd" d="M10 6v1.6h5.272L6 16.872 7.128 18 16.4 8.728V14H18V6z" />
+        </symbol>
     </svg>
 </button>
 
@@ -35,6 +34,10 @@ export default {
     flex-flow: nowrap;
     position: relative;
     z-index: 2;
+    @media (max-width: 600px) {
+		padding: 1.3rem 2rem;
+		width: 100%;
+	}
     &:active &__text {
         color: $LIGHT-GREY;
     }
@@ -53,10 +56,15 @@ export default {
         text-transform: uppercase;
         font-family: $base-font;
         font-size: 0.625rem;
+        line-height: 1;
         font-weight: 700;
         letter-spacing: 0.7px;
         color: $TEXT-COLOR;
         white-space: nowrap;
+        @media (max-width: 600px) {
+            font-size: 0.9rem;
+            font-weight: 600;
+		}
         &::before {
             position: absolute;
             content: '';
@@ -74,10 +82,14 @@ export default {
     }
     &__img {
         stroke: none;
-        height: 16px;
+        height: 14px;
         width: 16px;
         fill: $TEXT-COLOR;
         margin-left: 10px;
+        @media (max-width: 600px) {
+            height: 18px;
+            width: 18px;
+		}
     }
 }
 </style>

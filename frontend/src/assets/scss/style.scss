@@ -1,12 +1,14 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:500,600,700|Roboto+Mono:500,700');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700|Roboto+Mono:500,700');
 @import 'variables';
 @import 'mixines';
 @import 'animations';
+@import 'next-page-nav';
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -29,26 +31,3 @@ input:invalid {
     box-shadow: none;
 }
 
-.page {
-    width: 100%;
-    background-color: $MAIN-DARK-COLOR;
-
-    &--nav {
-        display: grid;
-        grid-template-columns: 112px auto;
-    }
-
-    &--center {
-        @extend %flex-row-c;
-    }
-
-    &--menu {
-        background-color: $DARK-GREY;
-    }
-
-    &--about-us {
-
-        @extend %flex-col-sb;
-        align-items: c;
-    }
-}

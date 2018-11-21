@@ -4,18 +4,17 @@
 	<transition 
 		appear
 		name="custom-classes-transition"
-		enter-active-class="animatedInNav fadeIn"
+		enter-active-class="animated d02 fadeIn"
 		leave-active-class="animated fast fadeOut">
-        <navigation v-show='navi' :navi='navi'></navigation>
+        <navigation v-show='showNav' :navi='showNav'></navigation>
     </transition>
-
     <transition 
 		appear
 		name="custom-classes-transition"
 		enter-active-class="animated fadeInLeft"
-		leave-active-class="animated02 fadeOut"
+		leave-active-class="animated d02 fadeOut"
 		mode="out-in">
-        <router-view/>
+         <router-view/>
     </transition>
 
   </div>
@@ -29,16 +28,12 @@ export default {
 	components: {
 		Navigation
 	},
-	data() {
-		return {
-			navi: true
-		};
-	},
-	methods: {
-		onNavi() {
+	computed: {
+		showNav() {
 			let name = this.$route.name;
 			if (
 				name == 'Hello' ||
+				name == 'Start' ||
 				name == 'Coworking' ||
 				name == 'MeetingRoom' ||
 				name == 'Events' ||
@@ -48,21 +43,7 @@ export default {
 			} else {
 				return false;
 			}
-		},
-		checkNav() {
-			if (this.navi !== this.onNavi()) {
-				if (this.navi) {
-					setTimeout(() => {
-						this.navi = this.onNavi();
-					}, 250);
-				} else {
-					this.navi = this.onNavi();
-				}
-			}
 		}
-	},
-	beforeUpdate() {
-		this.checkNav();
 	}
 };
 </script>
@@ -78,12 +59,9 @@ export default {
 	@extend %flex-row;
 	background-color: $MAIN-DARK-COLOR;
 	align-items: center;
-}
-.routlinks {
-	position: fixed;
-	top: 0;
-	right: 0;
-	left: 0;
-	z-index: 100000;
+	@media (max-width: 600px) {
+        flex-direction: column;
+		justify-content: flex-start;
+    }
 }
 </style>

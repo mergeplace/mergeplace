@@ -1,5 +1,5 @@
 <template>
-<button class="button-membership button-membership--hello">
+<button class="button-membership">
 	<p class='button-membership__text'>
 		BECOME A MEMBER
 		<svg class='button-membership__img'>
@@ -36,6 +36,10 @@ export default {
     position: relative;
     transition: background-color ease-in-out 0.1s;
     z-index: 2;
+    @media (max-width: 600px) {
+		padding: 1.3rem 2rem;
+		width: 100%;
+	}
     &:active {
         background-color: $MERGE-DARK-COLOR;
     }
@@ -49,12 +53,17 @@ export default {
         align-items: center;
         text-transform: uppercase;
         font-family: $base-font;
-        font-size: 10px;
+        font-size: 0.625rem;
         font-weight: 700;
         text-align: center;
+        line-height: 1;
         color: $MAIN-DARK-COLOR;
         letter-spacing: 0.7px;
         white-space: nowrap;
+        @media (max-width: 600px) {
+            font-size: 0.9rem;
+			font-weight: 600;
+        }
         &::before {
             position: absolute;
             content: '';
@@ -72,10 +81,9 @@ export default {
     }
     &__img {
         fill: $MAIN-DARK-COLOR;
-        height: 12px;
+        height: 14px;
         width: 16px;
         stroke: none;
-        margin-bottom: 2px;
     }
 }
 
