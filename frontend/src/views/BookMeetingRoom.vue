@@ -7,35 +7,34 @@
 		<button-close-mini class="book-meeting-room__close" @click.native='goBack'></button-close-mini>
 		<div class="book-meeting-room__button-back-wrapper">
 			<button-back class="book-meeting-room__button-back" @click.native='goBack'></button-back>
-			<p class="book-meeting-room__button-text" @click='goBack'>go back</p>
+			<p class="book-meeting-room__button-text" @click='goBack'>{{ $t('bookMeetingRoom.back') }}</p>
 		</div>
-		<h2 class="book-meeting-room__title">Meeting room<br>Reservation
-		</h2>
+		<h2 class="book-meeting-room__title">{{ $t('bookMeetingRoom.title.0') }}<br>{{ $t('bookMeetingRoom.title.1') }}</h2>
 		<form action="" id='book-meeting-room-form' name='book-meeting-room' class="book-meeting-room__form">
 			<div class='book-meeting-room__time-wrapper'>
-				<p class="book-meeting-room__date-label">Day</p>
+				<p class="book-meeting-room__date-label">{{ $t('bookMeetingRoom.label.day') }}</p>
 				<p class="book-meeting-room__date-choice book-meeting-room__date-choice--day">{{ day }}</p>
-				<p class="book-meeting-room__date-label book-meeting-room__date-label--time">Time</p>	
+				<p class="book-meeting-room__date-label book-meeting-room__date-label--time">{{ $t('bookMeetingRoom.label.time') }}</p>	
 				<p class="book-meeting-room__date-choice book-meeting-room__date-choice--time">{{ duration }}</p>
 				<button class="book-meeting-room__edit-date" @click.prevent='editDate'>
 					<svg class="book-meeting-room__edit-icon">
 						<use xlink:href='#icon-edit'/>
 					</svg>
-					<p class="book-meeting-room__edit-text">Back to Calendar</p>
+					<p class="book-meeting-room__edit-text">{{ $t('bookMeetingRoom.toCalendar') }}</p>
 				</button>
 			</div>
 			<div class="book-meeting-room__time-wrapper-mobile">
-				<p class="book-meeting-room__date-label">Day</p>
+				<p class="book-meeting-room__date-label">{{ $t('bookMeetingRoom.label.day') }}</p>
 				<label class="datepicker book-meeting-room__datepicker">
 					<input type='date' class="datepicker__input" v-model='mobile.day'>
 					<p class="datepicker__text">{{ mobileDay }}</p>
 				</label>
-				<p class="book-meeting-room__date-label book-meeting-room__date-label--time">Time</p>	
+				<p class="book-meeting-room__date-label book-meeting-room__date-label--time">{{ $t('bookMeetingRoom.label.time') }}</p>	
 				<time-picker class="book-meeting-room__timepicker" @mobileTime='inboxTime' :day='mobile.day'></time-picker>
 				<p class="book-meeting-room__mobile-duration">{{ durationMobile }}</p>
 			</div>
 			<div class="book-meeting-room__input-wrapper">
-				<label for="book-meeting-name" class="book-meeting-room__label book-meeting-room__label--name">NAME</label>
+				<label for="book-meeting-name" class="book-meeting-room__label book-meeting-room__label--name">{{ $t('bookMeetingRoom.label.name') }}</label>
 				<input type="text" 
 					autocomplete='on'
 					id="book-meeting-name" 
@@ -43,15 +42,15 @@
 					required 
 					placeholder="Andrey Malishko"
 					v-model.trim="bookRoomData.name"
-					@blur="checkName"
+					@blur="checkAll"
 					:class="{inputError: errors.name, greenBorder: !errors.name}">
 				<transition 
 					name="custom-classes-transition"
 					enter-active-class="animated03 pullDown"
 					leave-active-class="animated02 pullUp">
-				<p class='book-meeting-room__validate book-meeting-room__validate--name' v-if="errors.name">Please enter {{ errors.name }} to continue</p>
+				<p class='book-meeting-room__validate book-meeting-room__validate--name' v-if="errors.name">{{ errors.name }}</p>
 				</transition>
-				<label for="book-meeting-phone" class="book-meeting-room__label book-meeting-room__label--phone">PHONE</label>
+				<label for="book-meeting-phone" class="book-meeting-room__label book-meeting-room__label--phone">{{ $t('bookMeetingRoom.label.phone') }}</label>
 				<input type="tel" 
 					id='book-meeting-phone' 
 					autocomplete='on'
@@ -59,13 +58,13 @@
 					required 
 					placeholder="+38 (000) 000 00-00"
 					v-model.trim="bookRoomData.phone"
-					@blur="checkPhone"
+					@blur="checkAll"
 					:class="{inputError: errors.phone, greenBorder: !errors.phone}">
 				<transition 
 					name="custom-classes-transition"
 					enter-active-class="animated03 pullDown"
 					leave-active-class="animated02 pullUp">
-				<p class='book-meeting-room__validate book-meeting-room__validate--phone' v-if="errors.phone">Please enter {{ errors.phone }} to continue</p>
+				<p class='book-meeting-room__validate book-meeting-room__validate--phone' v-if="errors.phone">{{ errors.phone }}</p>
 				</transition>
 			</div>
 			<label for="book-meeting-resident" class="book-meeting-room__resident-label">
@@ -80,7 +79,7 @@
 						<use xlink:href='#icon-checkbox'/>
 					</svg>
 				</div>
-				<p class="book-meeting-room__resident-text">I'm a Resident</p>
+				<p class="book-meeting-room__resident-text">{{ $t('bookMeetingRoom.resident') }}</p>
 			</label>
 		</form>
         <div class="book-meeting-room__check-frame" v-if='bookRoomData.resident'>
@@ -91,7 +90,7 @@
 				leave-active-class="animated02 pullUp">
             <div class="check-free-time__wrapper" v-if='visible.checkFrameIn'>
 			<form id='check-free-time' class="check-free-time">
-				<p class="check-free-time__text">Put your E-Mail for checking availability of free hours for Meeting Room's using
+				<p class="check-free-time__text">{{ $t('bookMeetingRoom.checkMail') }}
 				</p>
 				<input form='check-free-time' 
 					type="email" 
@@ -99,27 +98,27 @@
 					class="check-free-time__email" 
 					placeholder="Email"
 					:class="{inputError: errors.email, greenBorder: !errors.email}"
-					@blur="checkEmail"
+					@blur="checkAll"
 					v-model.trim="bookRoomData.email">
 				<transition 
 					name="custom-classes-transition"
 					enter-active-class="animated03 pullDown"
 					leave-active-class="animated02 pullUp">
-				<p class='book-meeting-room__validate book-meeting-room__validate--email'  v-if="errors.email">Please enter {{ errors.email }} to continue</p>
+				<p class='book-meeting-room__validate book-meeting-room__validate--email'  v-if="errors.email">{{ errors.email }}</p>
 				</transition>
 				<button	class="check-free-time__button" 
 					@click.prevent="checkResidentTime"
 					:disabled='showCheck'>
-					<p class="check-free-time__button-text">CHECK</p>
+					<p class="check-free-time__button-text">{{ $t('bookMeetingRoom.button') }}</p>
 				</button>
 			</form>
             </div>
             </transition>
 			<button	class="check-free-time__button check-free-time__button--mobile" 
-				v-if='visile.checkFrameIn'
+				v-if='visible.checkFrameIn'
 				@click.prevent="checkResidentTime"
 				:disabled='showCheck'>
-				<p class="check-free-time__button-text">CHECK</p>
+				<p class="check-free-time__button-text">{{ $t('bookMeetingRoom.button') }}</p>
 			</button>
             <transition 
 				appear
@@ -128,9 +127,9 @@
 				leave-active-class="animated pullUp">
             <div class="resident-time-info__wrapper" v-if='visible.checkFrameOut'>
 				<div class="resident-time-info">
-					<p class="resident-time-info__title resident-time-info__title--name">Resident</p>
-					<p class="resident-time-info__title resident-time-info__title--duration">Duration</p>
-					<p class="resident-time-info__title resident-time-info__title--hours">Free Hours</p>
+					<p class="resident-time-info__title resident-time-info__title--name">{{ $t('bookMeetingRoom.check.name') }}</p>
+					<p class="resident-time-info__title resident-time-info__title--duration">{{ $t('bookMeetingRoom.check.duration') }}</p>
+					<p class="resident-time-info__title resident-time-info__title--hours">{{ $t('bookMeetingRoom.check.hours') }}</p>
 					<p class="resident-time-info__text resident-time-info__text--name">{{ bookRoomData.name }}</p>
 					<p class="resident-time-info__text resident-time-info__text--duration">{{ checkFreeDuration }}</p>
 					<p class="resident-time-info__text resident-time-info__text--hours"
@@ -140,13 +139,13 @@
             </transition>
         </div>
 		<div class="book-meeting-room__apply-wrapper">
-			<p class="booking-price book-meeting-room__price">Price:
+			<p class="booking-price book-meeting-room__price">{{ $t('bookMeetingRoom.price') }}
 				<span class="booking-price__sum book-meeting-room__sum">{{ price }}</span>
 				<span class="booking-price__sum book-meeting-room__sum book-meeting-room__sum--mobile">{{ priceMobile }}</span>
 			</p>
 			<button-book class='book-meeting-room__book-button' :disabled='showSubmit' @click.native='visible.bookingRoomDone = true'></button-book>
 			<button-book class='book-meeting-room__book-button-mobile' :disabled='showSubmitMobile' @click.native='visible.bookingRoomDoneMobile = true'></button-book>
-			<button class="book-meeting-room__cancel" @click.prevent='goBack'>CANCEL</button>
+			<button class="book-meeting-room__cancel" @click.prevent='goBack'>{{ $t('bookMeetingRoom.close') }}</button>
 		</div>
 	</div>
     <svg style="display: none">
@@ -162,7 +161,6 @@
 
 <script>
 import http from 'axios';
-import DatePicker from 'vue2-datepicker'
 import ButtonCloseMini from '@/components/buttons/ButtonCloseMini.vue';
 import ButtonBack from '@/components/buttons/ButtonBack.vue';
 import ButtonBook from '@/components/buttons/ButtonBook.vue';
@@ -180,7 +178,6 @@ export default {
 		ButtonCloseMini,
 		BookingRoomDone,
 		BookingRoomDoneMobile,
-		DatePicker,
 		TimePicker
 	},
 	data() {
@@ -260,24 +257,29 @@ export default {
 		},
 		checkName() {
 			if (this.bookRoomData.name && !this.validName(this.bookRoomData.name) && this.bookRoomData.phone) {
-				this.errors.name = 'your name and surname';
+				this.errors.name = this.$t('validate.name');
 			} else {
 				this.errors.name = null;
 			}
 		},
 		checkPhone() {
 			if (this.bookRoomData.phone && !this.validPhone(this.bookRoomData.phone) && !this.validFormatPhone(this.bookRoomData.phone) && this.bookRoomData.name) {
-				this.errors.phone = 'your phone';
+				this.errors.phone = this.$t('validate.phone');
 			} else {
 				this.errors.phone = null;
 			}
 		},
 		checkEmail() {
 			if (this.bookRoomData.email && !this.validEmail(this.bookRoomData.email) && this.bookRoomData.name && this.bookRoomData.phone) {
-				this.errors.email = 'your e-mail';
+				this.errors.email = this.$t('validate.mail');
 			} else {
 				this.errors.email = null;
 			}
+		},
+		checkAll() {
+			this.checkName();
+			this.checkPhone();
+			this.checkEmail();
 		},
 		validEmail(email) {
 			// eslint-disable-next-line
@@ -693,6 +695,7 @@ export default {
 			}
 	}
 	&__date-label {
+		text-transform: uppercase;
 		grid-area: day;
 		font-family: $base-font;
 		font-size: 0.625rem;
@@ -809,6 +812,7 @@ export default {
 		}
 	}
 	&__label {
+		text-transform: uppercase;
 		align-items: stretch;
 		font-family: $base-font;
 		font-size: 0.5rem;
