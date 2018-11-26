@@ -143,8 +143,8 @@
 				<span class="booking-price__sum book-meeting-room__sum">{{ price }}</span>
 				<span class="booking-price__sum book-meeting-room__sum book-meeting-room__sum--mobile">{{ priceMobile }}</span>
 			</p>
-			<button-book class='book-meeting-room__book-button' :disabled='showSubmit' @click.native='visible.bookingRoomDone = true'></button-book>
-			<button-book class='book-meeting-room__book-button-mobile' :disabled='showSubmitMobile' @click.native='visible.bookingRoomDoneMobile = true'></button-book>
+			<button-book class='book-meeting-room__book-button' :disabled='showSubmit' @click.native='bookRoom'></button-book>
+			<button-book class='book-meeting-room__book-button-mobile' :disabled='showSubmitMobile' @click.native='bookRoomMobile'></button-book>
 			<button class="book-meeting-room__cancel" @click.prevent='goBack'>{{ $t('bookMeetingRoom.close') }}</button>
 		</div>
 	</div>
@@ -191,6 +191,7 @@ export default {
 			bookRoomData: {
 				name: null,
 				phone: null,
+				phonePure: null,
 				email: null,
 				resident: false
 			},
@@ -225,6 +226,52 @@ export default {
 		};
 	},
 	methods: {
+		bookRoom() {
+			let params = {
+				name: this.bookRoomData.name, 
+				phone: this.bookRoomData.phonePure, 
+				day: this.day,
+				time: this.duration,
+				resident: this.bookRoomData.resident,
+				email: this.bookRoomData.email, 
+				price: this.price,
+				submit: new Date()
+			};
+			http.post(`https://hooks.zapier.com/hooks/catch/4108304/c60kua/`, params, {
+				headers: {
+					'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+				}
+			})
+			.then(() => {
+				this.visible.bookingDone = true;
+			})
+			.catch(e => {
+				window.console.log(e)
+			})
+		},
+		bookRoomMobile() {
+			let params = {
+				name: this.bookRoomData.name, 
+				phone: this.bookRoomData.phonePure, 
+				day: this.mobile.day,
+				time: this.durationMobile,
+				resident: this.bookRoomData.resident,
+				email: this.bookRoomData.email, 
+				price: this.priceMobile,
+				submit: new Date()
+			};
+			http.post(`https://hooks.zapier.com/hooks/catch/4108304/c60kua/`, params, {
+				headers: {
+					'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+				}
+			})
+			.then(() => {
+				this.visible.bookingRoomDoneMobile = true;
+			})
+			.catch(e => {
+				window.console.log(e)
+			})
+		},
 		editName() {
 			this.visible.bookingRoomDone = false;
 			this.visible.bookCard = true;
@@ -523,6 +570,7 @@ export default {
 		'bookRoomData.phone'() {
 			if (this.bookRoomData.phone && (this.validPhone(this.bookRoomData.phone) || this.validFormatPhone(this.bookRoomData.phone))) {
 				if(!this.validFormatPhone(this.bookRoomData.phone)) {
+					this.bookRoomData.phonePure = this.bookRoomData.phone;
 					this.bookRoomData.phone = this.formatNumber;
 				}
 				this.errors.phone = null

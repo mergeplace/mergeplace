@@ -142,9 +142,6 @@ export default {
 		}
 	},
 	methods: {
-		toggleText(index) {
-			window.console.log(index);
-		},
 		getEvents() {
 			http.get('http://mergeplace.test/?rest_route=/wp/v2/posts/')
 			.then(response=> {

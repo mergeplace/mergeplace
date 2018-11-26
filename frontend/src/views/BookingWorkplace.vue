@@ -5,7 +5,7 @@
 		name="custom-classes-transition"
 		enter-active-class="animated fadeIn"
 		mode="out-in">
-	<booking-done v-if='bookingDone'></booking-done>
+	<booking-done v-if='visible.bookingDone'></booking-done>
 	</transition>
     <transition
 		name="custom-classes-transition"
@@ -251,11 +251,10 @@
 			</p>
 			<button-apply 
                 :disabled='showSubmit'
-                @click.native="sendForm"
+                @click.native="zapier"
 				class="booking-workplace__apply">
             </button-apply>
 		</div>
-		<button id="signin-button" @click="login">Sign in</button>
 		<button class="booking-workplace__cancel" @click.prevent='goBack'>{{ $t('bookingWorkplace.button') }}</button>
 	</section>
     <svg style="display: none">
@@ -267,6 +266,7 @@
 </template>
 
 <script>
+import http from 'axios';
 import { TweenLite } from 'gsap';
 import ButtonBack from '@/components/buttons/ButtonBack.vue';
 import ButtonApply from '@/components/buttons/ButtonApply.vue';
@@ -295,6 +295,7 @@ export default {
 				residentCard: false,
 				dayCard: false,
 				weekCard: false,
+				bookingDone: false
 			},
 			errors: {
 				name: null,
@@ -322,7 +323,6 @@ export default {
 				transition: 'transform ease-in-out 0.3s'
 			},
 			onStyleAnimate: null,
-			bookingDone: false,
 			ApiParams: {
 				spreadsheetId: '1ZLga7LoqZLKTEiZmg6g-Xv7WA7Bwq8-s8QEDI_muDlo', 
 				range: 'Merge!A2:E2',
@@ -337,6 +337,27 @@ export default {
 		};
 	},
 	methods: {
+		zapier() {
+			let params = {
+				name: this.form.name, 
+				phone: this.form.phonePure, 
+				email: this.form.email, 
+				career: this.form.career, 
+				tariff: this.tariff,
+				date: new Date()
+			};
+			http.post(`https://hooks.zapier.com/hooks/catch/4108304/c6guss`, params, {
+				headers: {
+					'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+				}
+			})
+			.then(() => {
+				this.visible.bookingDone = true;
+			})
+			.catch(e => {
+				window.console.log(e)
+			})
+		},
 		goBack() {
 			this.onStyleAnimate = this.styleAnimate;
 			setTimeout(() => {
@@ -396,35 +417,6 @@ export default {
 			// eslint-disable-next-line
 			let re = /^([A-ZА-ЯА-ЩЬЮЯЇІЄҐ])+([a-zA-Zа-яА-Яа-щА-ЩЬьЮюЯяЇїІіЄєҐґ]{1,40})((\s?)([a-zA-Zа-яА-Яа-щА-ЩЬьЮюЯяЇїІіЄєҐґ]{1,40})){1,3}?$/;
 			return re.test(name);
-		},
-		sendForm() {
-			let valueRangeBody = {
-				"majorDimension": "ROWS",
-				"values": [
-						[
-							this.form.name,
-							this.form.phonePure,
-							this.form.email,
-							this.form.career,
-							this.tariff
-						]
-					]
-				};
-			this.$getGapiClient()
-			.then(gapi => {
-				let request = gapi.client.sheets.spreadsheets.values.append(this.ApiParams, valueRangeBody);
-				request.then(response=> {
-					window.console.log(response.result);
-				}, reason=> {
-					window.console.error('error: ' + reason.result.error.message);
-				});
-			})
-		},
-		login () {
-			this.$login()
-		},
-		logout () {
-			this.$logout()
 		},
 		updateTariff(value){
 			this.$store.commit('change', value.target.value);
