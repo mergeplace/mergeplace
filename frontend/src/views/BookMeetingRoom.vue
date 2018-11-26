@@ -243,7 +243,7 @@ export default {
 				}
 			})
 			.then(() => {
-				this.visible.bookingDone = true;
+				this.visible.bookingRoomDone = true;
 			})
 			.catch(e => {
 				window.console.log(e)
