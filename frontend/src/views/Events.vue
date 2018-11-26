@@ -137,7 +137,8 @@ export default {
 				}
 			},
 			toggleIndex: -1,
-			toggleButton: true
+			toggleButton: true,
+			errors: []
 		}
 	},
 	methods: {
@@ -160,7 +161,7 @@ export default {
 				}
 			})
 			.catch(e => {
-				this.errors.arr.push(e);
+				this.errors.push(e);
 			});
 		}
 	},

@@ -4,6 +4,7 @@ import router from './router';
 import VueCookies from 'vue-cookies';
 import store from './store';
 import './i18n';
+import './gapi';
 
 Vue.use(VueCookies);
 

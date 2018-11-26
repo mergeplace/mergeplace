@@ -255,6 +255,7 @@
 				class="booking-workplace__apply">
             </button-apply>
 		</div>
+		<button id="signin-button" @click="login">Sign in</button>
 		<button class="booking-workplace__cancel" @click.prevent='goBack'>{{ $t('bookingWorkplace.button') }}</button>
 	</section>
     <svg style="display: none">
@@ -266,7 +267,6 @@
 </template>
 
 <script>
-import http from 'axios';
 import { TweenLite } from 'gsap';
 import ButtonBack from '@/components/buttons/ButtonBack.vue';
 import ButtonApply from '@/components/buttons/ButtonApply.vue';
@@ -307,6 +307,7 @@ export default {
 				name: null,
 				phone: null,
 				email: null,
+				phonePure: null,
 				career: null,
 				picked: this.tariff
 			},
@@ -321,7 +322,18 @@ export default {
 				transition: 'transform ease-in-out 0.3s'
 			},
 			onStyleAnimate: null,
-			bookingDone: false
+			bookingDone: false,
+			ApiParams: {
+				spreadsheetId: '1ZLga7LoqZLKTEiZmg6g-Xv7WA7Bwq8-s8QEDI_muDlo', 
+				range: 'Merge!A2:E2',
+				valueInputOption: 'USER_ENTERED', 
+				insertDataOption: 'INSERT_ROWS',  
+			},
+			sheetsApi: {
+				API_KEY: 'AIzaSyCwSdSdIblDFzQbJSzu17XmnqZ4WvOsTPw', 
+				CLIENT_ID: '439379594062-3rn83ast9er0aj23buk2sr99oasjevar.apps.googleusercontent.com',
+				SCOPE: 'https://www.googleapis.com/auth/spreadsheets'
+			} 
 		};
 	},
 	methods: {
@@ -386,15 +398,33 @@ export default {
 			return re.test(name);
 		},
 		sendForm() {
-			let params = JSON.stringify(this.form);
-			http.post('https://jsonplaceholder.typicode.com/posts', params)
-			.then(()=> {
-				window.scrollTo(0, 0);
-				this.bookingDone = true;
+			let valueRangeBody = {
+				"majorDimension": "ROWS",
+				"values": [
+						[
+							this.form.name,
+							this.form.phonePure,
+							this.form.email,
+							this.form.career,
+							this.tariff
+						]
+					]
+				};
+			this.$getGapiClient()
+			.then(gapi => {
+				let request = gapi.client.sheets.spreadsheets.values.append(this.ApiParams, valueRangeBody);
+				request.then(response=> {
+					window.console.log(response.result);
+				}, reason=> {
+					window.console.error('error: ' + reason.result.error.message);
+				});
 			})
-			.catch(e => {
-				this.errors.arr.push(e);
-			});
+		},
+		login () {
+			this.$login()
+		},
+		logout () {
+			this.$logout()
 		},
 		updateTariff(value){
 			this.$store.commit('change', value.target.value);
@@ -483,6 +513,7 @@ export default {
 		'form.phone'() {
 			if (this.form.phone && (this.validPhone(this.form.phone) || this.validFormatPhone(this.form.phone))) {
 				if(!this.validFormatPhone(this.form.phone)) {
+					this.form.phonePure = this.form.phone;
 					this.form.phone = this.formatNumber;
 				}
 				this.errors.phone = null;
