@@ -3,7 +3,7 @@
 	<logo class="book-meeting-room__logo"></logo>
 	<booking-room-done :bookRoomData='bookRoomData' v-if='visible.bookingRoomDone' @edit='editName'></booking-room-done>
 	<booking-room-done-mobile v-if='visible.bookingRoomDoneMobile'></booking-room-done-mobile>
-	<div class="book-meeting-room" v-show='!visible.bookingRoomDone || !visible.bookingRoomDoneMobile' :style="onStyleAnimate" >
+	<div class="book-meeting-room" v-show='!visible.bookingRoomDone && !visible.bookingRoomDoneMobile' :style="onStyleAnimate" >
 		<button-close-mini class="book-meeting-room__close" @click.native='goBack'></button-close-mini>
 		<div class="book-meeting-room__button-back-wrapper">
 			<button-back class="book-meeting-room__button-back" @click.native='goBack'></button-back>
