@@ -78,6 +78,7 @@
 		<span class="glide__slash"> / </span>
 		<span class="glide__sum">{{ quantity }}</span>
 	</p>
+	<button @click="getImages">GET</button>
 	<button class="glide__arrow glide__arrow--right" data-glide-dir=">">
 		<svg class='glide__nav-icon'>
 			<use xlink:href='#chevron-right' />
@@ -108,6 +109,7 @@
 </template>
 
 <script>
+import http from "axios";
 import Glide from '@glidejs/glide';
 
 export default {

@@ -545,6 +545,7 @@ function rest_send_cors_headers( $value ) {
 		header( 'Access-Control-Allow-Methods: OPTIONS, GET, POST, PUT, PATCH, DELETE' );
 		header( 'Access-Control-Allow-Credentials: true' );
 		header( 'Vary: Origin' );
+		header( 'Access-Control-Allow-Headers','Content-Type, Accept');
 	}
 
 	return $value;

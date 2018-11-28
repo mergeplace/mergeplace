@@ -4,7 +4,7 @@
 	<div class="events__wrapper">
 		<div class="events__inner">
 			<header class="events__header">
-				<h1 class="events__title animated d05 delay-02s fadeInLeft">{{ $t('events.title') }}</h1>
+				<h1 class="events__title animated d05 delay-02s fadeInLeft" @click="getEvents">{{ $t('events.title') }}</h1>
 				<p class="events__subtitle animated d05 delay-03s fadeInLeft">{{ $t('events.subtitle') }}</p>
 			</header>
 			<main class='events__main animated d05 delay-04s fadeInLeft'>
@@ -31,24 +31,24 @@
 							<a class="event__button-more" href="#" @click.prevent="+toggleIndex != +index?toggleIndex = index:toggleIndex = -1">{{ $t('events.buttons.more') }}
 								<div class='event__triangle' :style='+toggleIndex == +index? style.triangle: ""'></div>
 							</a>
-							<button class="event__button-details">
+							<a :href="event.link" target="_blank" class="event__button-details">
 								<p class='event__button-text'>{{ $t('events.buttons.open') }}
 									<svg class='event__button-img'>
 										<use xlink:href='#arrow-right-up' />
 									</svg>
 								</p>
-							</button>
+							</a>
 						</section>
 						<section class="event__info">
 							<p class="event__date">{{ event.date }}</p>
 							<p class="event__time">{{ event.time }}</p>
 							<p class="event__price">{{ event.price }}</p>
-							<button class="event__info-button">
+							<a :href="event.link" target="_blank" class="event__info-button">
 								<p class='event__info-button-text'>{{ $t('events.buttons.mobile') }}</p>
 								<svg class='event__info-button-img'>
 									<use xlink:href='#arrow-right' />
 								</svg>
-							</button>
+							</a>
 						</section>
 					</article>
 				</section>
@@ -61,24 +61,24 @@
 							<a class="event__button-more" href="#" @click.prevent="+toggleIndex != +index?toggleIndex = index:toggleIndex = -1">{{ $t('events.buttons.more') }}
 								<div class='event__triangle' :style='+toggleIndex == +index? style.triangle: ""'></div>
 							</a>
-							<button class="event__button-details">
+							<a :href="event.link" target="_blank" class="event__button-details">
 								<p class='event__button-text'>{{ $t('events.buttons.open') }}
 									<svg class='event__button-img'>
 										<use xlink:href='#arrow-right-up' />
 									</svg>
 								</p>
-							</button>
+							</a>
 						</section>
 						<section class="event__info">
 							<p class="event__date">{{ event.date }}</p>
 							<p class="event__time">{{ event.time }}</p>
 							<p class="event__price">{{ event.price }}</p>
-							<button class="event__info-button">
+							<a :href="event.link" target="_blank" class="event__info-button">
 								<p class='event__info-button-text'>{{ $t('events.buttons.mobile') }}</p>
 								<svg class='event__info-button-img'>
 									<use xlink:href='#arrow-right' />
 								</svg>
-							</button>
+							</a>
 						</section>
 					</article>
 				</section>
@@ -142,27 +142,21 @@ export default {
 	},
 	methods: {
 		getEvents() {
-			http.get('https://sheets.googleapis.com/v4/spreadsheets/1J5b7JleB_l36IliVzZ8sfLahtsKBXgR1Voh5lPYPKZs/values/A2%3AI?dateTimeRenderOption=FORMATTED_STRING&majorDimension=ROWS&valueRenderOption=FORMATTED_VALUE&key=AIzaSyCwSdSdIblDFzQbJSzu17XmnqZ4WvOsTPw')
+			http.get('https://mergeplace.test/wp-json/acf/v3/posts')
 			.then(response=> {
+				window.console.log(response.data)
 				this.future = [];
 				this.past = [];
 				let now = new Date();
-				response.data.values.forEach(el=>{
-					let date = new Date(el[4]);
-					let newDate = `${date.toLocaleString("en-US", {day: '2-digit'})} ${date.toLocaleString("en-US", {month: 'long'})}, ${date.toLocaleString("en-US", {year: 'numeric'})}`;
-					let obj = {
-						title: el[1],
-						subtitle: el[2],
-						text: el[3],
-						date: newDate,
-						time: `${el[5]} - ${el[6]}`,
-						price: el[7],
-						link: el[8]
-					}
-					if(date >= now) {
-						this.future.push(obj);
-					} else {
-						this.past.push(obj);
+				response.data.forEach(el=>{
+					if(el.acf.type == 'event') {
+						let date = new Date(el.acf.date);
+						el.acf.time = `${el.acf.startTime}${el.acf.endTime?' - ' + el.acf.endTime:''}`
+						if(date >= now) {
+							this.future.push(el.acf);
+						} else {
+							this.past.push(el.acf);
+						}
 					}
 				}) 	
 			})
@@ -171,7 +165,7 @@ export default {
 			});
 		}
 	},
-	beforeMount() {
+	created() {
 		this.getEvents();
 	}
 }
@@ -536,6 +530,7 @@ export default {
 		}
 	}
 	&__info-button {
+		text-decoration: none;
 		display: none;
 		outline: none;
 		border: none;
