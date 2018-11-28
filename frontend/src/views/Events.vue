@@ -84,16 +84,15 @@
 				</section>
 				</transition>
 			</main>
-			
 		</div>
 	</div>
 	<section class="next-page-nav animated d05 delay-05s fadeInLeft">
-		<router-link to='/meeting-room' class="next-page-nav__link coworking__link-page coworking__link-page--meeting-room">
+		<router-link to='/meeting-room' class="next-page-nav__link events__link-page events__link-page--meeting-room">
 			<div class="next-page-nav__inner">
 				<p class="next-page-nav__text">{{ $t('links.meetingRoom') }}</p>
 			</div>
 		</router-link>
-		<router-link to='/about' class="next-page-nav__link coworking__link-page coworking__link-page--about">
+		<router-link to='/about' class="next-page-nav__link events__link-page events__link-page--about">
 			<div class="next-page-nav__inner">
 				<p class="next-page-nav__text">{{ $t('links.about') }}</p>
 			</div>
@@ -143,22 +142,32 @@ export default {
 	},
 	methods: {
 		getEvents() {
-			http.get('http://mergeplace.test/?rest_route=/wp/v2/posts/')
+			http.get('https://sheets.googleapis.com/v4/spreadsheets/1J5b7JleB_l36IliVzZ8sfLahtsKBXgR1Voh5lPYPKZs/values/A2%3AI?dateTimeRenderOption=FORMATTED_STRING&majorDimension=ROWS&valueRenderOption=FORMATTED_VALUE&key=AIzaSyCwSdSdIblDFzQbJSzu17XmnqZ4WvOsTPw')
 			.then(response=> {
 				this.future = [];
 				this.past = [];
 				let now = new Date();
-				for(let i of response.data) {
-					let date = new Date(i.acf.date);
-					if(date > now) {
-						this.future.push(i.acf);
-					} else {
-						this.past.push(i.acf);
+				response.data.values.forEach(el=>{
+					let date = new Date(el[4]);
+					let newDate = `${date.toLocaleString("en-US", {day: '2-digit'})} ${date.toLocaleString("en-US", {month: 'long'})}, ${date.toLocaleString("en-US", {year: 'numeric'})}`;
+					let obj = {
+						title: el[1],
+						subtitle: el[2],
+						text: el[3],
+						date: newDate,
+						time: `${el[5]} - ${el[6]}`,
+						price: el[7],
+						link: el[8]
 					}
-				}
+					if(date >= now) {
+						this.future.push(obj);
+					} else {
+						this.past.push(obj);
+					}
+				}) 	
 			})
 			.catch(e => {
-				this.errors.push(e);
+				window.console.log(e);
 			});
 		}
 	},
@@ -293,7 +302,7 @@ export default {
 			background-image: url('../assets/image/meeting-room.jpg');
 		}
 		&--about {
-			background-image: url('../assets/image/events.jpg');
+			background-image: url('../assets/image/about.jpg');
 		}
 	}
 	&__nav {
@@ -508,6 +517,7 @@ export default {
 		}
 	}
 	&__price {
+		text-transform: uppercase;
 		font-family: $base-font;
 		font-weight: 700;
 		font-size: 0.85rem;

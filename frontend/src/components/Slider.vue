@@ -1,18 +1,65 @@
 <template>
 <div class="glide">
 <div class="glide__track" data-glide-el="track">
-	<ul class="glide__slides">
+	<ul class="glide__slides" v-if='sliderType'>
 		<li class="glide__slide">
-			<img src="../assets/image/merge-1.jpg" alt="merge" class="glide__image">
+			<img src="../assets/image/meetingRoom/mr01.jpg" srcset='../assets/image/meetingRoom/mr01x2.jpg' alt="merge place" class="glide__image">
 		</li>
 		<li class="glide__slide">
-			<img src="../assets/image/merge-2.jpg" alt="merge" class="glide__image">
+			<img src="../assets/image/meetingRoom/mr02.jpg" srcset='../assets/image/meetingRoom/mr02x2.jpg' alt="merge place" class="glide__image">
 		</li>
 		<li class="glide__slide">
-			<img src="../assets/image/merge-3.jpg" alt="merge" class="glide__image">
+			<img src="../assets/image/meetingRoom/mr03.jpg" srcset='../assets/image/meetingRoom/mr03x2.jpg' alt="merge place" class="glide__image">
 		</li>
 		<li class="glide__slide">
-			<img src="../assets/image/merge-4.png" alt="merge" class="glide__image">
+			<img src="../assets/image/meetingRoom/mr04.jpg" srcset='../assets/image/meetingRoom/mr04x2.jpg' alt="merge place" class="glide__image">
+		</li>
+	</ul>
+	<ul class="glide__slides" v-else>
+		<li class="glide__slide">
+			<img src="../assets/image/coworking/cw01.jpg" srcset='../assets/image/coworking/cw01x2.jpg' alt="merge place" class="glide__image">
+		</li>
+		<li class="glide__slide">
+			<img src="../assets/image/coworking/cw02.jpg" srcset='../assets/image/coworking/cw02x2.jpg' alt="merge place" class="glide__image">
+		</li>
+		<li class="glide__slide">
+			<img src="../assets/image/coworking/cw03.jpg" srcset='../assets/image/coworking/cw03x2.jpg' alt="merge place" class="glide__image">
+		</li>
+		<li class="glide__slide">
+			<img src="../assets/image/coworking/cw04.jpg" srcset='../assets/image/coworking/cw04x2.jpg' alt="merge place" class="glide__image">
+		</li>
+		<li class="glide__slide">
+			<img src="../assets/image/coworking/cw05.jpg" srcset='../assets/image/coworking/cw05x2.jpg' alt="merge place" class="glide__image">
+		</li>
+		<li class="glide__slide">
+			<img src="../assets/image/coworking/cw06.jpg" srcset='../assets/image/coworking/cw06x2.jpg' alt="merge place" class="glide__image">
+		</li>
+		<li class="glide__slide">
+			<img src="../assets/image/coworking/cw07.jpg" srcset='../assets/image/coworking/cw07x2.jpg' alt="merge place" class="glide__image">
+		</li>
+		<li class="glide__slide">
+			<img src="../assets/image/coworking/cw08.jpg" srcset='../assets/image/coworking/cw08x2.jpg' alt="merge place" class="glide__image">
+		</li>
+		<li class="glide__slide">
+			<img src="../assets/image/coworking/cw09.jpg" srcset='../assets/image/coworking/cw09x2.jpg' alt="merge place" class="glide__image">
+		</li>
+		<li class="glide__slide">
+			<img src="../assets/image/coworking/cw10.jpg" srcset='../assets/image/coworking/cw10x2.jpg' alt="merge place" class="glide__image">
+		</li>
+		<li class="glide__slide">
+			<img src="../assets/image/coworking/cw11.jpg" srcset='../assets/image/coworking/cw11x2.jpg' alt="merge place" class="glide__image">
+		</li>
+		<li class="glide__slide">
+			<img src="../assets/image/coworking/cw12.jpg" srcset='../assets/image/coworking/cw12x2.jpg' alt="merge place" class="glide__image">
+		</li>
+		<li class="glide__slide">
+			<img src="../assets/image/coworking/cw13.jpg" srcset='../assets/image/coworking/cw13x2.jpg' alt="merge place" class="glide__image">
+		</li>
+		<li class="glide__slide">
+			<img src="../assets/image/coworking/cw14.jpg" srcset='../assets/image/coworking/cw14x2.jpg' alt="merge place" class="glide__image">
+		</li>
+		<li class="glide__slide">
+			<img src="../assets/image/coworking/cw15.jpg" srcset='../assets/image/coworking/cw15x2.jpg' alt="merge place" class="glide__image">
 		</li>
 	</ul>
 </div>
@@ -27,9 +74,9 @@
 		<div class="glide__outside"></div>
 	</button>
 	<p class="glide__counter-box">
-		<span class="glide__counter">{{ slideIndex }}</span>
+		<span class="glide__counter">{{ index }}</span>
 		<span class="glide__slash"> / </span>
-		<span class="glide__sum">{{ slides }}</span>
+		<span class="glide__sum">{{ quantity }}</span>
 	</p>
 	<button class="glide__arrow glide__arrow--right" data-glide-dir=">">
 		<svg class='glide__nav-icon'>
@@ -67,30 +114,36 @@ export default {
 	name: 'Slider',
 	data() {
 		return {
-			glide: undefined,
-			slideIndex: 0,
-			slides: 0
+			glide: '',
+			quantity: 0,
+			sliderType: true
 		};
 	},
 	methods: {
-		currentSlide() {
-			this.slideIndex = this.glide.index + 1;
+		sliderMount() {
+			this.glide = new Glide(this.$el, {
+				type: 'carousel',
+				perView: 1
+			});
+			this.glide.mount();
 		},
-		slidesCount() {
-			this.slides = document.querySelectorAll('.glide__image').length;
+		onQuantity() {
+			this.quantity = document.querySelectorAll('.glide__image').length;
+		},
+		onSliderType() {
+			this.$route.name == 'MeetingRoom'? this.sliderType = true: this.sliderType = false;
 		}
 	},
-	mounted() {
-		this.slidesCount();
-		this.glide = new Glide(this.$el, {
-			type: 'carousel',
-			perView: 1
-		});
-		this.glide.mount();
+	created() {
+		this.onSliderType();
 	},
-	watch: {
-		'glide.index': function() {
-			this.currentSlide();
+	mounted() {
+		this.onQuantity();
+		this.sliderMount();
+	},
+	computed: {
+		index() {
+			return this.glide.index + 1
 		}
 	}
 };

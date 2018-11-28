@@ -9,10 +9,10 @@
 			</header>
 			<section class="view-360 animated d06 delay-03s fadeInLeft">
 				<div class="view-360__row">
-					<button class="view-360__button">{{ $t('coworking.label.360') }}</button>
+					<p class="view-360__button">{{ $t('coworking.label.360') }}</p>
 				</div>
 				<div class="view-360__inner">
-					<img src="../assets/image/merge-4.png" alt="image" class="view-360__image">
+					<img src="../assets/image/meeting-room.jpg" alt="image" class="view-360__image">
 				</div>
 			</section>
 			<section class="beneffits animated d06 delay-04s fadeInLeft">
@@ -49,7 +49,7 @@
 				</div>
 			</section>
 			<section class="coworking__slider animated d06 delay-06s fadeInLeft">
-				<button class="coworking__label-button">{{ $t('coworking.label.photo') }}</button>
+				<p class="coworking__label-button">{{ $t('coworking.label.photo') }}</p>
 				<slider></slider>
 			</section>
 		</div>
@@ -221,9 +221,6 @@ export default {
 		border: none;
         transition: color ease-in-out 0.2s;
         margin-bottom: 1.5rem;
-		&:hover {
-			color: white;
-		}
 		@media (max-width: 600px) {
             display: none;
         }
@@ -261,9 +258,6 @@ export default {
 		outline: none;
 		border: none;
 		transition: color ease-in-out 0.2s;
-		&:hover {
-			color: white;
-		}
 	}
 	&__inner {
 		cursor: pointer;

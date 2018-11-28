@@ -16,7 +16,7 @@
 				<button-book-room @click.native='showBook'></button-book-room>
 			</header>
 			<section class="meeting-room__slider animated d06 delay-03s fadeInLeft">
-				<button class="meeting-room__label-button">{{ $t('meetingRoom.label') }}</button>
+				<p class="meeting-room__label-button">{{ $t('meetingRoom.label') }}</p>
 				<slider v-show='hideElements'></slider>
 			</section>
 			<section class="meeting-room-inf" v-show='hideElements'>
@@ -311,9 +311,6 @@ export default {
 		margin-bottom: 1.5rem;
 		@media (max-width: 600px) {
 			display: none;
-		}
-		&:hover {
-			color: white;
 		}
 	}
 	&__link-page {
