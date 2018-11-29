@@ -11,8 +11,14 @@
 				<div class="view-360__row">
 					<p class="view-360__button">{{ $t('coworking.label.360') }}</p>
 				</div>
+					<!-- <img src="../assets/image/meeting-room.jpg" alt="image" class="view-360__image"> -->
 				<div class="view-360__inner">
-					<img src="../assets/image/meeting-room.jpg" alt="image" class="view-360__image">
+					<iframe width="100%"
+						height="500"
+						frameborder="0" style="border:0"
+						src="https://www.google.com/maps/embed?pb=!4v1543506906360!6m8!1m7!1sCAoSK0FGMVFpcE9FcmtfZXpaUTRfTmZpdkFDMk9wMWUtbHB2TWdsVGRpUlMzMjQ.!2m2!1d49.06660919999999!2d33.4137548!3f350.4485472116105!4f-18.443471776261845!5f0.7820865974627469"
+						allowfullscreen>
+					</iframe>
 				</div>
 			</section>
 			<section class="beneffits animated d06 delay-04s fadeInLeft">
@@ -236,6 +242,7 @@ export default {
 	}
 }
 .view-360 {
+	width: 100%;
 	@extend %flex-col;
 	@media (max-width: 600px) {
 		display: none;
