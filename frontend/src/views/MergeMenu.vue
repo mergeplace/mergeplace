@@ -463,6 +463,8 @@ export default {
 			font-size: 13px;
 		}
 		&--day {
+			position: relative;
+			left: -1px;
 			font-weight: 400;
 			white-space: nowrap;
 		}
@@ -471,6 +473,8 @@ export default {
 			white-space: nowrap;
 		}
 		&--city {
+			position: relative;
+			left: -1px;
 			font-weight: 400;
 			line-height: 1.85;
 		}

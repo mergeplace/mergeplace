@@ -1,22 +1,20 @@
 <template>
   <div id="app">
-
 	<transition 
 		appear
 		name="custom-classes-transition"
-		enter-active-class="animated d02 fadeIn"
-		leave-active-class="animated fast fadeOut">
+		enter-active-class="animated fadeIn"
+		leave-active-class="animated d03 delay-01s fadeOut">
         <navigation v-show='showNav' :navi='showNav'></navigation>
     </transition>
     <transition 
 		appear
 		name="custom-classes-transition"
-		enter-active-class="animated fadeInLeft"
-		leave-active-class="animated d02 fadeOut"
+		enter-active-class="animated d05 fadeInLeft"
+		leave-active-class="animated fadeOut"
 		mode="out-in">
          <router-view/>
     </transition>
-
   </div>
 </template>
 

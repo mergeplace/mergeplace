@@ -144,7 +144,6 @@ export default {
 		getEvents() {
 			http.get('https://mergeplace.test/wp-json/acf/v3/posts')
 			.then(response=> {
-				window.console.log(response.data)
 				this.future = [];
 				this.past = [];
 				let now = new Date();
@@ -511,7 +510,7 @@ export default {
 		}
 	}
 	&__price {
-		text-transform: uppercase;
+		text-transform: capitalize;
 		font-family: $base-font;
 		font-weight: 700;
 		font-size: 0.85rem;

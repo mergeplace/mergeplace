@@ -1,65 +1,9 @@
 <template>
 <div class="glide">
 <div class="glide__track" data-glide-el="track">
-	<ul class="glide__slides" v-if='sliderType'>
-		<li class="glide__slide">
-			<img src="../assets/image/meetingRoom/mr01.jpg" srcset='../assets/image/meetingRoom/mr01x2.jpg' alt="merge place" class="glide__image">
-		</li>
-		<li class="glide__slide">
-			<img src="../assets/image/meetingRoom/mr02.jpg" srcset='../assets/image/meetingRoom/mr02x2.jpg' alt="merge place" class="glide__image">
-		</li>
-		<li class="glide__slide">
-			<img src="../assets/image/meetingRoom/mr03.jpg" srcset='../assets/image/meetingRoom/mr03x2.jpg' alt="merge place" class="glide__image">
-		</li>
-		<li class="glide__slide">
-			<img src="../assets/image/meetingRoom/mr04.jpg" srcset='../assets/image/meetingRoom/mr04x2.jpg' alt="merge place" class="glide__image">
-		</li>
-	</ul>
-	<ul class="glide__slides" v-else>
-		<li class="glide__slide">
-			<img src="../assets/image/coworking/cw01.jpg" srcset='../assets/image/coworking/cw01x2.jpg' alt="merge place" class="glide__image">
-		</li>
-		<li class="glide__slide">
-			<img src="../assets/image/coworking/cw02.jpg" srcset='../assets/image/coworking/cw02x2.jpg' alt="merge place" class="glide__image">
-		</li>
-		<li class="glide__slide">
-			<img src="../assets/image/coworking/cw03.jpg" srcset='../assets/image/coworking/cw03x2.jpg' alt="merge place" class="glide__image">
-		</li>
-		<li class="glide__slide">
-			<img src="../assets/image/coworking/cw04.jpg" srcset='../assets/image/coworking/cw04x2.jpg' alt="merge place" class="glide__image">
-		</li>
-		<li class="glide__slide">
-			<img src="../assets/image/coworking/cw05.jpg" srcset='../assets/image/coworking/cw05x2.jpg' alt="merge place" class="glide__image">
-		</li>
-		<li class="glide__slide">
-			<img src="../assets/image/coworking/cw06.jpg" srcset='../assets/image/coworking/cw06x2.jpg' alt="merge place" class="glide__image">
-		</li>
-		<li class="glide__slide">
-			<img src="../assets/image/coworking/cw07.jpg" srcset='../assets/image/coworking/cw07x2.jpg' alt="merge place" class="glide__image">
-		</li>
-		<li class="glide__slide">
-			<img src="../assets/image/coworking/cw08.jpg" srcset='../assets/image/coworking/cw08x2.jpg' alt="merge place" class="glide__image">
-		</li>
-		<li class="glide__slide">
-			<img src="../assets/image/coworking/cw09.jpg" srcset='../assets/image/coworking/cw09x2.jpg' alt="merge place" class="glide__image">
-		</li>
-		<li class="glide__slide">
-			<img src="../assets/image/coworking/cw10.jpg" srcset='../assets/image/coworking/cw10x2.jpg' alt="merge place" class="glide__image">
-		</li>
-		<li class="glide__slide">
-			<img src="../assets/image/coworking/cw11.jpg" srcset='../assets/image/coworking/cw11x2.jpg' alt="merge place" class="glide__image">
-		</li>
-		<li class="glide__slide">
-			<img src="../assets/image/coworking/cw12.jpg" srcset='../assets/image/coworking/cw12x2.jpg' alt="merge place" class="glide__image">
-		</li>
-		<li class="glide__slide">
-			<img src="../assets/image/coworking/cw13.jpg" srcset='../assets/image/coworking/cw13x2.jpg' alt="merge place" class="glide__image">
-		</li>
-		<li class="glide__slide">
-			<img src="../assets/image/coworking/cw14.jpg" srcset='../assets/image/coworking/cw14x2.jpg' alt="merge place" class="glide__image">
-		</li>
-		<li class="glide__slide">
-			<img src="../assets/image/coworking/cw15.jpg" srcset='../assets/image/coworking/cw15x2.jpg' alt="merge place" class="glide__image">
+	<ul class="glide__slides">
+		<li class="glide__slide" v-for="image in images" :key="image.id">
+			<img :src="image.url" :srcset='image.urlX2' alt="merge place" class="glide__image">
 		</li>
 	</ul>
 </div>
@@ -78,7 +22,6 @@
 		<span class="glide__slash"> / </span>
 		<span class="glide__sum">{{ quantity }}</span>
 	</p>
-	<button @click="getImages">GET</button>
 	<button class="glide__arrow glide__arrow--right" data-glide-dir=">">
 		<svg class='glide__nav-icon'>
 			<use xlink:href='#chevron-right' />
@@ -117,35 +60,75 @@ export default {
 	data() {
 		return {
 			glide: '',
-			quantity: 0,
-			sliderType: true
+			images: [],
+			sliderReady: false
 		};
 	},
 	methods: {
 		sliderMount() {
-			this.glide = new Glide(this.$el, {
-				type: 'carousel',
-				perView: 1
+			let timer = setInterval(()=>{
+				if(this.sliderReady) {
+					this.glide = new Glide(this.$el, {
+						type: 'carousel',
+						perView: 1
+					});
+					this.glide.mount();
+					clearInterval(timer);
+				}
+			}, 10);
+		},
+		getImages() {
+			http.get('https://mergeplace.test/wp-json/wp/v2/media')
+			.then(response => {
+				this.sortImages(response.data);
+				this.sliderReady = true;
+			})
+			.catch(e => {
+				window.console.log(e);
 			});
-			this.glide.mount();
 		},
-		onQuantity() {
-			this.quantity = document.querySelectorAll('.glide__image').length;
-		},
-		onSliderType() {
-			this.$route.name == 'MeetingRoom'? this.sliderType = true: this.sliderType = false;
+		sortImages(data) {
+			let route = this.$route.name,
+				key = 'coworking',
+				key_2 = 'coworking x2';
+			if (route == 'MeetingRoom') {
+				key = 'meeting room'; 
+				key_2 = 'meeting room x2';
+			}
+			data.forEach(image => {
+				if (key == image.alt_text) {
+					let id = image.title.rendered,
+						url = image.source_url;
+					this.images.push({"id": id, "url": url, "urlX2": url})
+				}
+			});
+			data.forEach(image => {
+				if (key_2 == image.alt_text) {
+					let id = image.title.rendered.slice(0, -2),
+						url = image.source_url + " 2x";
+					this.images.forEach(image => {
+						if (id == image.id) image.urlX2 = url;
+					});
+				}
+			});
 		}
 	},
 	created() {
-		this.onSliderType();
+		this.getImages();
 	},
 	mounted() {
-		this.onQuantity();
 		this.sliderMount();
 	},
 	computed: {
 		index() {
-			return this.glide.index + 1
+			if(this.sliderReady) {
+				return this.glide.index + 1
+			} return 0;
+		},
+		quantity() {
+			if(this.sliderReady) {
+				return this.images.length;
+			} return 0;
 		}
 	}
 };

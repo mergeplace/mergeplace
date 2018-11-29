@@ -1,5 +1,5 @@
 <template>
-<button class="button-map">
+<a href='https://goo.gl/maps/czfnQnyH7jB2' target='_blank' class="button-map">
 	<p class='button-map__text'>{{ $t('buttons.map') }}
 		<svg class='button-map__img'>
 			<use xlink:href='#arrow-right-up' />
@@ -10,7 +10,7 @@
             <path fill-rule="evenodd" d="M10 6v1.6h5.272L6 16.872 7.128 18 16.4 8.728V14H18V6z" />
         </symbol>
     </svg>
-</button>
+</a>
 
 </template>
 
@@ -24,6 +24,7 @@ export default {
 <style lang="scss">
 @import '../../assets/scss/style.scss';
 .button-map {
+    text-decoration: none;
     padding: 1rem 2rem;
     background-color: $BUTTON-COLOR;
     outline: none;
