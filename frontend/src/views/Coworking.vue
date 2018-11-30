@@ -16,7 +16,7 @@
 					<iframe width="100%"
 						height="500"
 						frameborder="0" style="border:0"
-						src="https://www.google.com/maps/embed?pb=!4v1543506906360!6m8!1m7!1sCAoSK0FGMVFpcE9FcmtfZXpaUTRfTmZpdkFDMk9wMWUtbHB2TWdsVGRpUlMzMjQ.!2m2!1d49.06660919999999!2d33.4137548!3f350.4485472116105!4f-18.443471776261845!5f0.7820865974627469"
+						src="https://www.google.com/maps/embed?pb=!4v1543573724581!6m8!1m7!1sCAoSK0FGMVFpcE9TbjZTUnYxc0RvYTJ4NjR5U3dOQVo3dWNtaEdjNklnWTdqSEk.!2m2!1d49.0667276!2d33.4137369!3f150.8408853047396!4f-2.270465503239663!5f0.7820865974627469"
 						allowfullscreen>
 					</iframe>
 				</div>
