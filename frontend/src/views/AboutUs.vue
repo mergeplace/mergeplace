@@ -1,5 +1,11 @@
 <template>
-<div class="about-us">
+<div class="about-us" v-scroll="handleScroll">
+	<div class="scroll" :style='scrollStyle'>
+		<div class="scroll__inner">
+			<div class="scroll__line"></div>
+			<p class="scroll__text">scroll</p>
+		</div>
+	</div>
 	<transition
 		name="custom-classes-transition"
 		enter-active-class="animated faster fadeIn"
@@ -117,7 +123,10 @@ export default {
 				residentCard: false,
 				dayCard: false,
 				weekCard: false
-			}	
+			},
+			scrollStyle: {
+				transform: null
+			}
 		};
 	},
 	methods: {
@@ -130,6 +139,26 @@ export default {
 				this.visible.weekCard = false;
 			}
 			
+		},
+		handleScroll(evt, el) {
+			let currentHeight = +el.scrollHeight,
+				viewportHeight = +window.innerHeight;
+			if (window.innerWidth > 920) {
+				viewportHeight -= 290;
+			} else {
+				viewportHeight -= 720;
+			}
+				let height = currentHeight - viewportHeight,
+				posY = window.scrollY,
+				percent;
+			if (posY) {
+				percent = Math.round(posY / (height / 80));
+			} else {
+				percent = 0;
+			}	
+			let position;
+			position = (viewportHeight / 100) * percent;
+			this.scrollStyle.transform = `translateY(${position}px)`;
 		}
 	},
 	computed: {

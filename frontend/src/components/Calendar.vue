@@ -131,7 +131,7 @@ export default {
     display: none;
   }
 	&__wrapper {
-		padding: 0 5% 0 10%;
+    padding: 0 5% 0 10%;
 	}
 	&__title {
 		padding-top: 4.4375rem;
@@ -140,7 +140,8 @@ export default {
 		font-size: 1.875rem;
 		font-weight: bold;
 		text-align: left;
-		color: $TEXT-COLOR;
+    color: $TEXT-COLOR;
+    border-top: 1px solid $MIDDLE-GREY-OPACITY;
 	}
 	&__inner {
 		padding: 4rem 0 5.6rem 0;

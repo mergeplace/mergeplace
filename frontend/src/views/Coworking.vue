@@ -1,6 +1,12 @@
 <template>
-<div class="coworking">
+<div class="coworking" v-scroll='handleScroll'>
 <!-- 2 wrappers to implement dual adaptive indents -->
+	<div class="scroll" :style='scrollStyle'>
+		<div class="scroll__inner">
+			<div class="scroll__line"></div>
+			<p class="scroll__text">scroll</p>
+		</div>
+	</div>
 	<div class="coworking__wrapper">
 		<div class="coworking__inner">
 			<header class="coworking__header animated d06 delay-02s fadeInLeft">
@@ -82,6 +88,13 @@ import Slider from '@/components/Slider.vue';
 
 export default {
 	name: 'coworking',
+	data() {
+		return {
+			scrollStyle: {
+				transform: null
+			}
+		}
+	},
 	components: {
 		ButtonMembership,
 		Slider
@@ -89,6 +102,26 @@ export default {
 	methods: {
 		becomeMember() {
 			this.$router.push('/booking-workplace');
+		},
+		handleScroll(evt, el) {
+			let currentHeight = +el.scrollHeight,
+				viewportHeight = +window.innerHeight;
+			if (window.innerWidth > 920) {
+				viewportHeight -= 290;
+			} else {
+				viewportHeight -= 720;
+			}
+				let height = currentHeight - viewportHeight,
+				posY = window.scrollY,
+				percent;
+			if (posY) {
+				percent = Math.round(posY / (height / 80));
+			} else {
+				percent = 0;
+			}	
+			let position;
+			position = (viewportHeight / 100) * percent;
+			this.scrollStyle.transform = `translateY(${position}px)`;
 		}
 	}
 }

@@ -11,15 +11,17 @@
     box-sizing: border-box;
     scroll-behavior: smooth;
     ::-webkit-scrollbar {
-        width: 20px;
+        opacity: 0;
+        background-color: $MAIN-DARK-COLOR;
+        width: 0px;
     }
     ::-webkit-scrollbar-thumb {
+        position: relative;
         cursor: pointer;
-        z-index: 1000000;
-        background: transparent;
+        background: red;
     }
     ::-webkit-scrollbar-track {
-        background: transparent;
+        background: $MAIN-DARK-COLOR;
     }
 }
 

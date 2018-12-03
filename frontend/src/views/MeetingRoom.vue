@@ -147,11 +147,15 @@ export default {
 		},
 		handleScroll(evt, el) {
 			let currentHeight = +el.scrollHeight,
-				viewportHeight = +window.innerHeight,
-				height = currentHeight - viewportHeight,
+				viewportHeight = +window.innerHeight;
+			if (window.innerWidth > 920) {
+				viewportHeight -= 310;
+			} else {
+				viewportHeight -= 720;
+			}
+			let height = currentHeight - viewportHeight,
 				posY = window.scrollY,
 				percent;
-				window.console.log(posY)
 			if (posY) {
 				percent = Math.round(posY / (height / 80));
 			} else {
@@ -352,7 +356,6 @@ export default {
 }
 .meeting-room-inf {
 	width: 100%;
-	border-bottom: 1px solid $MIDDLE-GREY-OPACITY;
 	@extend %flex-row;
 	@media (max-width: 980px) {
 		margin-bottom: 4rem;
@@ -386,8 +389,8 @@ export default {
 	&__buttons {
 		padding: 5rem 0;
 		width: 100%;
-		border-top: 2px solid $MIDDLE-GREY-OPACITY;
-		border-bottom: 2px solid $MIDDLE-GREY-OPACITY;
+		border-top: 1px solid $MIDDLE-GREY-OPACITY;
+		border-bottom: 1px solid $MIDDLE-GREY-OPACITY;
 		@extend %flex-col;
 		align-items: stretch;
 		@media (max-width: 720px) {
@@ -421,7 +424,7 @@ export default {
 			margin: 0;
 		}
 		&--resident {
-			border: solid 2px $DARK-GREY;
+			border: solid 1px $MIDDLE-GREY-OPACITY;
 			background: transparent;
 			@media (max-width: 600px) {
 				display: none;

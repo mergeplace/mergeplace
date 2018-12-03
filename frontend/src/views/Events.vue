@@ -1,6 +1,12 @@
 <template>
-<div class="events">
+<div class="events" v-scroll='handleScroll'>
 <!-- 2 wrappers to implement dual adaptive indents -->
+	<div class="scroll" :style='style.scrollStyle'>
+		<div class="scroll__inner">
+			<div class="scroll__line"></div>
+			<p class="scroll__text">scroll</p>
+		</div>
+	</div>
 	<div class="events__wrapper">
 		<div class="events__inner">
 			<header class="events__header">
@@ -133,6 +139,9 @@ export default {
 				},
 				activeButton: {
 					color: '#ffffff'
+				},
+				scrollStyle: {
+					transform: null
 				}
 			},
 			toggleIndex: -1,
@@ -141,6 +150,26 @@ export default {
 		}
 	},
 	methods: {
+		handleScroll(evt, el) {
+			let currentHeight = +el.scrollHeight,
+				viewportHeight = +window.innerHeight;
+			if (window.innerWidth > 920) {
+				viewportHeight -= 230;
+			} else {
+				viewportHeight -= 720;
+			}
+				let height = currentHeight - viewportHeight,
+				posY = window.scrollY,
+				percent;
+			if (posY) {
+				percent = Math.round(posY / (height / 80));
+			} else {
+				percent = 0;
+			}	
+			let position;
+			position = (viewportHeight / 100) * percent;
+			this.style.scrollStyle.transform = `translateY(${position}px)`;
+		},
 		getEvents() {
 			http.get('https://mergeplace.test/wp-json/acf/v3/posts')
 			.then(response=> {
