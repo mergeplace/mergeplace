@@ -48,29 +48,29 @@
 	<h2 class="hello__subtitle animated d05 delay-02s fadeInLeft">{{ $t('hello.subtitle') }}
 	</h2>
 	<div class="hello-link__wrapper animated d06 delay-03s fadeInLeft">
-		<a href="#" class="hello-link hello-link--how-get">
+		<a :href="$t('hello.link.wayUrl')" target="_blank" class="hello-link hello-link--how-get">
 			<svg class='hello-link__img'>
 				<use xlink:href='#videocamera' />
 			</svg>
 			<p class="hello-link__text">{{ $t('hello.link.way') }}
 			</p>
 		</a>
-		<a href="#" class="hello-link hello-link--prices">
+		<router-link to="/about" class="hello-link hello-link--prices">
 			<svg class='hello-link__img'>
 				<use xlink:href='#infoborder' />
 			</svg>
 			<p class="hello-link__text">{{ $t('hello.link.info') }}
 			</p>
-		</a>
+		</router-link>
 	</div>
 	<p class="hello__text animated d05 delay-04s fadeInLeft">{{ $t('hello.text.clean_0') }}
-		<a class='hello__text--link'>{{ $t('hello.text.link_0') }}</a>
+		<router-link to="/coworking" class='hello__text--link'>{{ $t('hello.text.link_0') }}</router-link >
 		{{ $t('hello.text.clean_1') }}
-		<a href='#' class='hello__text--link'>{{ $t('hello.text.link_1') }}</a>
+		<a href='https://www.facebook.com/merge.place/' target="_blank" class='hello__text--link'>{{ $t('hello.text.link_1') }}</a>
 		{{ $t('hello.text.clean_2') }}
-		<a href='#' class='hello__text--link'>{{ $t('hello.text.link_2') }}</a>
+		<router-link to="/meeting-room" class='hello__text--link'>{{ $t('hello.text.link_2') }}</router-link>
 		{{ $t('hello.text.clean_3') }}
-		<a href='#' class='hello__text--link'>{{ $t('hello.text.link_3') }}</a>
+		<router-link to="/events" class='hello__text--link'>{{ $t('hello.text.link_3') }}</router-link>
 		{{ $t('hello.text.clean_4') }}
 	</p>
 	<div class="hello__button-wrapper animated d05 delay-05s fadeInLeft">

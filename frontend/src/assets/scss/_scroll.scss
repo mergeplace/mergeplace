@@ -1,0 +1,26 @@
+.scroll {
+	position: fixed;
+	color: red;
+	right: -60px;
+	top: 70px;
+	transition: linear 0.01s;
+	z-index: 10000;
+	pointer-events: none;
+	&__inner {
+		transform: rotate(90deg);
+		@extend %flex-row-c;
+	}
+	&__line {
+		width: 48px;
+		height: 1px;
+		background-color: $GREY;
+		margin-right: 10px;
+	}
+	&__text {
+		text-transform: uppercase;
+		color: $GREY;
+		font-size: 0.6rem;
+		letter-spacing: 0.2pt;
+		font-family: $base-font;
+	}
+}

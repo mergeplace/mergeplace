@@ -3,12 +3,24 @@
 @import 'mixines';
 @import 'animations';
 @import 'next-page-nav';
+@import 'scroll';
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     scroll-behavior: smooth;
+    ::-webkit-scrollbar {
+        width: 20px;
+    }
+    ::-webkit-scrollbar-thumb {
+        cursor: pointer;
+        z-index: 1000000;
+        background: transparent;
+    }
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
 }
 
 body {

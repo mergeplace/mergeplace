@@ -1,5 +1,11 @@
 <template>
-<div class="meeting-room">
+<div class="meeting-room" v-scroll="handleScroll">
+	<div class="scroll" :style='scrollStyle'>
+		<div class="scroll__inner">
+			<div class="scroll__line"></div>
+			<p class="scroll__text">scroll</p>
+		</div>
+	</div>
 	<transition 
 		appear
 		name="custom-classes-transition"
@@ -107,7 +113,10 @@ export default {
 	data() {
 		return {
 			hideElements: true,
-			showBookMeetingRoom: false
+			showBookMeetingRoom: false,
+			scrollStyle: {
+				transform: null
+			}
 		};
 	},
 	methods: {
@@ -135,6 +144,22 @@ export default {
 			let top = document.getElementById(href).getBoundingClientRect().top;
 			let coord = top + pageYOffset;
 			window.scrollTo(0, (coord - 2));
+		},
+		handleScroll(evt, el) {
+			let currentHeight = +el.scrollHeight,
+				viewportHeight = +window.innerHeight,
+				height = currentHeight - viewportHeight,
+				posY = window.scrollY,
+				percent;
+				window.console.log(posY)
+			if (posY) {
+				percent = Math.round(posY / (height / 80));
+			} else {
+				percent = 0;
+			}	
+			let position;
+			position = (viewportHeight / 100) * percent;
+			this.scrollStyle.transform = `translateY(${position}px)`;
 		}
 	},
 	computed: {
@@ -155,11 +180,13 @@ export default {
 
 <style lang="scss">
 @import '../assets/scss/style.scss';
+
 .meeting-room {
 	width: 100%;
 	@extend %flex-col;
 	align-items: center;
 	justify-items: center;
+	position: relative;
 	padding-top: 7rem;
 	@media (orientation: landscape) and (max-width: 820px) {
 		padding-top: 20pt;
@@ -298,6 +325,7 @@ export default {
 		}
 	}
 	&__label-button {
+		transition: 1.5s all cubic-bezier(0.39, 0.575, 0.565, 1);
 		padding: 0.5rem 1rem;
 		background-color: black;
 		font-family: Montserrat;
