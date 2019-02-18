@@ -1,0 +1,62 @@
+{
+  "name": "merge.place",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "vue-cli-service serve",
+    "build:dev": "vue-cli-service build --mode development",
+    "build": "vue-cli-service build --mode production",
+    "build:prod": "vue-cli-service build --mode production",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@directus/sdk-js": "^5.1.4",
+    "@glidejs/glide": "^3.2.3",
+    "axios": "^0.18.0",
+    "es6-promise": "^4.2.5",
+    "fullcalendar": "^3.9.0",
+    "generate-calendar-url": "^1.0.0",
+    "gsap": "^2.0.2",
+    "jquery": "^3.3.1",
+    "moment": "^2.23.0",
+    "vue": "^2.5.17",
+    "vue-cookies": "^1.5.7",
+    "vue-gapi": "0.0.10",
+    "vue-router": "^3.0.1",
+    "vue-typer": "^1.2.0",
+    "vuex": "^3.0.1",
+    "vuex-i18n": "^1.10.5"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.0.5",
+    "@vue/cli-plugin-eslint": "^3.0.5",
+    "@vue/cli-service": "^3.0.5",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.0.1",
+    "vue-template-compiler": "^2.5.17"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
+}
