@@ -20,14 +20,14 @@
               id='future-button'
               href="#"
               :style='toggleButton? style.activeButton: ""'
-              @click.prevent='toggleButton = !toggleButton'>{{ $t('events.nav.future') }}
+              @click.prevent='toggleEvent'>{{ $t('events.nav.future') }}
             </a>
 						<a
               class="events__button events__button--past"
               id='past-button'
               href="#"
               :style='!toggleButton? style.activeButton: ""'
-              @click.prevent='toggleButton = !toggleButton'>{{ $t('events.nav.past') }}
+              @click.prevent='toggleEvent'>{{ $t('events.nav.past') }}
             </a>
 					</div>
 					<div class="events__nav-line">
@@ -54,12 +54,16 @@
 						<section class="event__content">
 							<h2 class="event__title">{{ event.title }}</h2>
 							<p class="event__subtitle">{{ event.subtitle }}</p>
-							<p class="event__text" :style='+toggleIndex == +index? style.showText: style.hideText'>{{ event.description }}</p>
+              <p
+                class="event__text"
+                :style='+toggleIndex == +index? style.showText: style.hideText'
+                v-html="event.description">
+              </p>
 							<a
                 class="event__button-more"
                 href="#"
                 @click.prevent="+toggleIndex != +index?toggleIndex = index:toggleIndex = -1">{{ $t('events.buttons.more') }}
-								<div class='event__triangle' :style='+toggleIndex == +index? style.triangle: ""'></div>
+								<div class='event__triangle' :style='+toggleIndex === +index? style.triangle: ""'></div>
 							</a>
 							<a :href="event.link" target="_blank" class="event__button-details">
 								<p class='event__button-text'>{{ $t('events.buttons.open') }}
@@ -89,7 +93,11 @@
 						<section class="event__content">
 							<h2 class="event__title">{{ event.title }}</h2>
 							<p class="event__subtitle">{{ event.subtitle }}</p>
-							<p class="event__text" :style='+toggleIndex == +index? style.showText: style.hideText'>{{ event.text }}</p>
+							<p
+                class="event__text"
+                :style='+toggleIndex == +index? style.showText: style.hideText'
+                v-html="event.description">
+              </p>
 							<a
                 class="event__button-more"
                 href="#"
@@ -185,7 +193,11 @@ export default {
 	methods: {
 		...mapActions('events', [
 			'downloadEvents'
-		]),
+    ]),
+    toggleEvent() {
+      this.toggleIndex = -1;
+      this.toggleButton = !this.toggleButton;
+    },
 		handleScroll(evt, el) {
 			let currentHeight = +el.scrollHeight,
 				viewportHeight = +window.innerHeight;
