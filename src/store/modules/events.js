@@ -1,28 +1,23 @@
 import axios from "axios";
 import moment from 'moment';
 
-function toDate(date) {
-	const [day, month, year]= date.split(".")
-  return new Date(year, month - 1, day)
-}
-
-const url = 'http://127.0.0.1:8090';
+const url = 'http://api.merge.rocks';
 
 const state = {
-	events: [],
-	errors: []
+  events: [],
+  errors: [],
 }
 
 const mutations = {
 	addEvents(state, data) {
 		state.events = data;
 	},
-	pushError(state, error) {
-		state.errors.push(error);
-	},
 	deleteEvents(state) {
 		state.events = [];
-	}
+  },
+  pushErrors(state, error) {
+		state.errors.push(error);
+	},
 }
 
 const actions = {
@@ -42,7 +37,7 @@ const actions = {
         commit('addEvents', data);
       })
       .catch(error => {
-        console.log('An error occurred:', error);
+        commit('pushErrors', `An error occurred:' ${error}`);
       });
   },
 }
@@ -60,7 +55,7 @@ const getters = {
         time: el.time,
         title: el[`title_${lang}`],
         subtitle: el[`subtitle_${lang}`],
-        text: el[`text_${lang}`],
+        description: el[`description_${lang}`],
       }
 		})
 		return data;

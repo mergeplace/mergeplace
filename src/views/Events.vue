@@ -54,7 +54,7 @@
 						<section class="event__content">
 							<h2 class="event__title">{{ event.title }}</h2>
 							<p class="event__subtitle">{{ event.subtitle }}</p>
-							<p class="event__text" :style='+toggleIndex == +index? style.showText: style.hideText'>{{ event.text }}</p>
+							<p class="event__text" :style='+toggleIndex == +index? style.showText: style.hideText'>{{ event.description }}</p>
 							<a
                 class="event__button-more"
                 href="#"
@@ -146,7 +146,6 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import moment from 'moment';
 
 export default {
 	name: 'Events',

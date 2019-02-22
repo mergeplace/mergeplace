@@ -3,7 +3,7 @@
 <div class="glide__track" data-glide-el="track">
 	<ul class="glide__slides">
 		<li class="glide__slide" v-for="(image, index) in images" :key="index">
-			<img :src="image.url" alt="merge place" class="glide__image">
+			<img :src="image.url" alt="Merge place photo" class="glide__image">
 		</li>
 	</ul>
 </div>

@@ -588,9 +588,12 @@ export default {
 			}
 		}
 	},
-	created() {
-		this.getApi();
-	}
+  beforeMount() {
+    this.getApi();
+  },
+  beforeUpdate() {
+    this.getApi();
+  },
 };
 </script>
 

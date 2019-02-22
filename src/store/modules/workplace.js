@@ -1,17 +1,15 @@
-import DirectusSDK from "@directus/sdk-js";
+import axios from "axios";
 
-const client = new DirectusSDK({
-	url: "http://test.loc/directus/public/",
-  project: "_"
-});
+const url = "http://api.merge.rocks";
 
 const state = {
 	tariff: 'month',
 	price: {
 		month: 1000,
 		week: 400,
-		day: 80
-	},
+		day: 80,
+  },
+  api: '',
 	errors: []
 }
 
@@ -20,11 +18,12 @@ const mutations = {
 		state.tariff = value;
 	},
 	setPrices(state, data) {
-		for (const key in data) {
-			if (state.price.hasOwnProperty(key)) {
-				state.price[key] = data[key];
-			}
-		}
+    Object.keys(state.price).forEach((key) => {
+      state.price[key] = data[key];
+    });
+  },
+  setApi(state, value) {
+		state.api = value;
 	},
 	pushErrors(state, error) {
 		state.errors.push(error);
@@ -33,12 +32,22 @@ const mutations = {
 
 const actions = {
 	getPrices({ commit }) {
-		client.getItems("prices")
-		.then(response => {
-			commit('setPrices', response.data[0])
-		})
-		.catch(error => commit('pushError', error));
-	}
+		axios
+      .get(`${url}/prices`)
+      .then(response => {
+        commit('setPrices', response.data[0]);
+      })
+      .catch(error => commit('pushError', error));
+  },
+  getApi({ commit }) {
+		axios
+      .get(`${url}/myapis`)
+      .then(response => {
+        const api = response.data[0].workplace;
+        commit('setApi', api);
+      })
+      .catch(error => commit('pushError', error));
+	},
 }
 
 export default {

@@ -268,7 +268,7 @@
 
 <script>
 import http from 'axios';
-import { mapMutations, mapState } from 'vuex';
+import { mapMutations, mapState, mapActions } from 'vuex';
 import { TweenLite } from 'gsap';
 import ButtonBack from '@/components/buttons/ButtonBack.vue';
 import ButtonApply from '@/components/buttons/ButtonApply.vue';
@@ -325,23 +325,15 @@ export default {
 				transition: 'transform ease-in-out 0.3s'
 			},
 			onStyleAnimate: null,
-			ApiParams: {
-				spreadsheetId: '1ZLga7LoqZLKTEiZmg6g-Xv7WA7Bwq8-s8QEDI_muDlo', 
-				range: 'Merge!A2:E2',
-				valueInputOption: 'USER_ENTERED', 
-				insertDataOption: 'INSERT_ROWS',  
-			},
-			sheetsApi: {
-				API_KEY: 'AIzaSyCwSdSdIblDFzQbJSzu17XmnqZ4WvOsTPw', 
-				CLIENT_ID: '439379594062-3rn83ast9er0aj23buk2sr99oasjevar.apps.googleusercontent.com',
-				SCOPE: 'https://www.googleapis.com/auth/spreadsheets'
-			} 
 		};
 	},
 	methods: {
 		...mapMutations('workplace', [
 			'setTariff',
-			'setPrices'
+			'setPrices',
+    ]),
+    ...mapActions('workplace', [
+			'getApi',
 		]),
 		zapier() {
 			let params = {
@@ -352,7 +344,7 @@ export default {
 				tariff: this.tariff,
 				date: new Date()
 			};
-			http.post(`https://hooks.zapier.com/hooks/catch/4108304/c6guss`, params, {
+			http.post(this.api, params, {
 				headers: {
 					'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
 				}
@@ -430,7 +422,8 @@ export default {
 	},
 	computed: {
 		...mapState('workplace', [
-			'price'
+      'price',
+      'api',
 		]),
 		tariff: {
 			get () {
@@ -529,10 +522,16 @@ export default {
 				this.validStatus.email = false;
 			}
 		}
-	},
+  },
+  beforeMount() {
+    this.getApi();
+  },
 	mounted() {
 		this.tariff
-	}
+  },
+  beforeUpdate() {
+    this.getApi();
+  },
 };
 </script>
 
