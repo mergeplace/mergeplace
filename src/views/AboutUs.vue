@@ -482,9 +482,6 @@ export default {
       align-items: flex-start;
       padding: 0 2rem;
     }
-    @media (max-width: 600px) {
-      display: none;
-    }
     &--margin {
       margin-bottom: 100px;
     }
