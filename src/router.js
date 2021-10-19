@@ -1,8 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-
 import Hello from './views/Hello.vue';
-import BookingWorkplace from './views/BookingWorkplace.vue';
 import AboutUs from './views/AboutUs.vue';
 import Coworking from './views/Coworking.vue';
 import MeetingRoom from './views/MeetingRoom.vue';
