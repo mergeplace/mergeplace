@@ -2,12 +2,12 @@
   "access": "Free",
 	"currency": "UAH",
 	"buttons": {
-		"member": "BECOME A MEMBER",
+		"member": "ABOUT US",
 		"apply": "apply",
 		"book": "book",
 		"map": "VIEW ON THE MAP",
 		"now": "book now",
-		"bookRoom": "book a meeting room",
+		"bookRoom": "meeting room",
 		"resident": "BECOME A RESIDENT"
 	},
 	"links": {

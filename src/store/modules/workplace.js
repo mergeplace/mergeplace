@@ -5,9 +5,9 @@ const url = "http://api.merge.rocks";
 const state = {
 	tariff: 'month',
 	price: {
-		month: 1000,
+		month: 2800,
 		week: 400,
-		day: 80,
+		day: 400,
   },
   api: '',
 	errors: []

@@ -28,6 +28,7 @@
     "vuex-i18n": "^1.13.1"
   },
   "devDependencies": {
+    "@types/vuex-i18n": "^1.13.0",
     "@vue/cli-plugin-babel": "^3.12.1",
     "@vue/cli-plugin-eslint": "^3.12.1",
     "@vue/cli-service": "^3.12.1",
