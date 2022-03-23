@@ -44,7 +44,7 @@ export default {
 				{val: '18:30', color: {color: ''}, disable: false},
 				{val: '19:00', color: {color: ''}, disable: false},
 				{val: '19:30', color: {color: ''}, disable: false},
-				{val: '20:00', color: {color: ''}, disable: false}
+				{val: '18:00', color: {color: ''}, disable: false}
 			],
 			checkedTime: [],
 			dropdown: false

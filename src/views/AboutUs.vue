@@ -44,16 +44,16 @@
             alt="clock"
           />
           <p class="work-time__text work-time__text--weekday">
-            {{ $t("aboutUs.time.weekdayText") }}
+            {{ $t("time.weekdayText") }}
           </p>
           <p class="work-time__text work-time__text--weekend">
-            {{ $t("aboutUs.time.weekendText") }}
+            {{ $t("time.weekendText") }}
           </p>
           <p class="work-time__text work-time__text--time">
-            {{ $t("aboutUs.time.weekdayTime") }}
+            {{ $t("time.weekdayTime") }}
           </p>
           <p class="work-time__text work-time__text--weekend-time">
-            {{ $t("aboutUs.time.weekendTime") }}
+            {{ $t("time.weekendTime") }}
           </p>
         </section>
         <section
@@ -77,6 +77,22 @@
             </p>
             <p class="subscription-type__price">
               {{ `${price.month} ${$t("currency")}` }}
+            </p>
+            <a href="#" class="subscription-type__link-img">
+              <svg class="subscription-type__img">
+                <use xlink:href="#infoborder" />
+              </svg>
+            </a>
+          </div>
+           <div
+            class="subscription-type animated d06 delay-06s fadeInLeft"
+            @click="visible.weekCard = true"
+          >
+            <p class="subscription-type__title">
+              {{ $t("aboutUs.subscription.week.title") }}
+            </p>
+            <p class="subscription-type__price">
+              {{ `${price.week} ${$t("currency")}` }}
             </p>
             <a href="#" class="subscription-type__link-img">
               <svg class="subscription-type__img">

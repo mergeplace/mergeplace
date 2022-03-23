@@ -4,7 +4,7 @@ import router from './router';
 import VueCookies from 'vue-cookies';
 import store from './store';
 import DirectusSDK from "@directus/sdk-js";
-
+import './assets/scss/style.scss';
 import './i18n';
 
 Vue.use(VueCookies);

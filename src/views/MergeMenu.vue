@@ -20,11 +20,6 @@
     <div class="menu__col menu__col--links-second"></div>
     <div class="menu__inner">
       <ul class="menu__list">
-        <li class="menu__item animated d04 delay-02s fadeInLeft">
-          <router-link to="/" class="menu__link menu__link--merge">{{
-            $t("menu.links.home")
-          }}</router-link>
-        </li>
         <li class="menu__item animated d04 delay-03s fadeInLeft">
           <router-link
             to="/coworking"
@@ -91,18 +86,6 @@
             class="menu__language-input"
             type="radio"
             name="language"
-            value="ru"
-            v-model="changeLanguage"
-          />
-          <p class="menu__language-text menu__language-text--ru">
-            {{ $t("menu.languages.ru") }}
-          </p>
-        </label>
-        <label class="menu__language-link">
-          <input
-            class="menu__language-input"
-            type="radio"
-            name="language"
             value="en"
             v-model="changeLanguage"
             checked
@@ -120,16 +103,16 @@
         </svg>
       </div>
       <p class="menu__text menu__text--day menu-row-2">
-        {{ $t("menu.time.weekday") }}
+        {{ $t("time.weekday") }}
       </p>
       <p class="menu__text menu__text--time menu-row-3">
-        {{ $t("menu.time.weekdayTime") }}
+        {{ $t("time.weekdayTime") }}
       </p>
       <p class="menu__text menu__text--day menu-row-5">
-        {{ $t("menu.time.weekend") }}
+        {{ $t("time.weekend") }}
       </p>
       <p class="menu__text menu__text--time menu-row-6">
-        {{ $t("menu.time.weekendTime") }}
+        {{ $t("time.weekendTime") }}
       </p>
       <div class="menu__image-wrapper menu-row-7">
         <svg class="menu__image menu__image--location">

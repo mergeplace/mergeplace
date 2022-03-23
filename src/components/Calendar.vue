@@ -64,7 +64,7 @@ export default {
       defaultView: 'agendaWeek',
       allDaySlot: false,
       minTime: '08:00:00',
-      maxTime: '20:00:00',
+      maxTime: '18:00:00',
       slotEventOverlap: false,
       selectOverlap: false,
       slotDuration: '00:30:00',

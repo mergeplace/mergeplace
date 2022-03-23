@@ -2,19 +2,19 @@
   <section id="hello" class="hello">
     <div class="hello__title-wrapper">
       <h1 class="hello__title">
-        <vue-typer
-          :text="$t('hello.title.0')"
-          :repeat="0"
-          :shuffle="false"
-          initial-action="typing"
-          :pre-type-delay="700"
-          :type-delay="200"
-          :erase-on-complete="false"
-          caret-animation="smooth"
-          @typed="onTyped"
-        ></vue-typer>
-      </h1>
-      <h1 class="hello__title hello__title--second">
+        <span class="hello__title hello__title--nowrap">
+          <vue-typer
+            :text="$t('hello.title.0')"
+            :repeat="0"
+            :shuffle="false"
+            initial-action="typing"
+            :pre-type-delay="700"
+            :type-delay="200"
+            :erase-on-complete="false"
+            caret-animation="smooth"
+            @typed="activeString = 1"
+          ></vue-typer>
+        </span>
         <span class="hello__title hello__title--nowrap">
           <vue-typer
             :text="$t('hello.title.1')"
@@ -25,11 +25,13 @@
             :type-delay="200"
             :erase-on-complete="false"
             caret-animation="smooth"
-            v-if="secondString"
-            @typed="onTypedSecond"
+            v-if="activeString >= 1"
+            @typed="activeString = 2"
           ></vue-typer>
         </span>
-        <span class="hello__logo">
+      </h1>
+      <h1 class="hello__title hello__title--second">
+        <span class="hello__title hello__title--nowrap hello__logo">
           <vue-typer
             :text="$t('hello.title.2')"
             :repeat="0"
@@ -39,7 +41,21 @@
             :type-delay="200"
             :erase-on-complete="false"
             caret-animation="smooth"
-            v-if="thirdString"
+            v-if="activeString >= 2"
+            @typed="activeString = 3"
+          ></vue-typer>
+        </span>
+        <span class="hello__title hello__title--nowrap hello__logo">
+          <vue-typer
+            :text="$t('hello.title.3')"
+            :repeat="0"
+            :shuffle="false"
+            initial-action="typing"
+            :pre-type-delay="700"
+            :type-delay="200"
+            :erase-on-complete="false"
+            caret-animation="smooth"
+            v-if="activeString >= 3"
           ></vue-typer>
         </span>
       </h1>
@@ -86,9 +102,15 @@
       {{ $t("hello.text.clean_4") }}
     </p>
     <div class="hello__button-wrapper animated d05 delay-05s fadeInLeft">
-		<button-membership class='hello__button' @click.native='becomeMember'></button-membership>
-		<button-book-room class='hello__button' @click.native='meetingRoom'></button-book-room>
-	</div>
+      <button-membership
+        class="hello__button"
+        @click.native="becomeMember"
+      ></button-membership>
+      <button-book-room
+        class="hello__button"
+        @click.native="meetingRoom"
+      ></button-book-room>
+    </div>
     <svg style="display: none">
       <symbol id="videocamera" viewBox="0 0 24 24">
         <path
@@ -120,17 +142,10 @@ export default {
   },
   data() {
     return {
-      secondString: false,
-      thirdString: false,
+      activeString: 0,
     };
   },
   methods: {
-    onTyped() {
-      this.secondString = true;
-    },
-    onTypedSecond() {
-      this.thirdString = true;
-    },
     meetingRoom() {
       this.$router.push("/meeting-room");
     },
@@ -159,7 +174,8 @@ export default {
   align-content: center;
   justify-items: start;
   justify-content: start;
-  @media (max-width: 660px) {
+  @media (max-width: 600px) {
+    grid-row-gap: 0rem;
     grid-template-columns: 5% auto auto;
     padding: 1rem 1rem 1rem 112px;
   }
@@ -189,10 +205,9 @@ export default {
     font-size: 5rem;
     text-align: left;
     font-family: $title-font;
-    white-space: nowrap;
     color: $TEXT-COLOR;
     font-weight: 500;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     .vue-typer {
       font-family: $title-font;
       font-weight: 500;
@@ -203,35 +218,32 @@ export default {
         background-color: $TEXT-COLOR;
       }
     }
-    @media (max-width: 840px) {
-      flex-direction: column;
-      align-items: flex-start;
+    @media (max-width: 1024px) {
+      font-size: 3rem;
     }
     @media (max-width: 600px) {
       text-align: left;
-      width: 100%;
+      font-size: 2.6rem;
     }
     @media (max-width: 540px) {
-      font-size: 3.6rem;
+      font-size: 2rem;
       line-height: 1.2;
     }
-    @media (max-width: 375px) {
-      font-size: 3.2rem;
-    }
     @media (max-width: 320px) {
-      font-size: 2.8rem;
+      font-size: 1.6rem;
     }
     &--nowrap {
       flex-direction: row;
       align-items: center;
       flex-wrap: nowrap;
+      white-space: nowrap;
     }
   }
   &__title-wrapper {
     @extend %flex-col;
     grid-area: title;
     @media (max-width: 600px) {
-      margin-bottom: 10pt;
+      margin-bottom: 28pt;
     }
     @media (max-width: 500px) {
       margin-bottom: 24pt;
@@ -250,48 +262,14 @@ export default {
     }
   }
   &__logo {
-    align-self: flex-end;
-    margin: 0;
-    padding-left: 3rem;
-    font-size: 5rem;
-    text-align: left;
-    font-family: $title-font;
-    font-weight: 500;
     color: $MERGE-MAIN-COLOR;
-    letter-spacing: 20px;
-    white-space: nowrap;
-    @extend %flex-row;
-    flex-wrap: nowrap;
     .vue-typer {
-      font-family: $title-font;
-      font-weight: 500;
       .custom.char {
         color: $MERGE-MAIN-COLOR;
       }
       .custom.caret {
         background-color: $TEXT-COLOR;
       }
-    }
-    @media (max-width: 840px) {
-      align-self: flex-start;
-      padding-left: 0;
-      padding-right: 2rem;
-    }
-    @media (max-width: 600px) {
-      width: 100%;
-      text-align: left;
-      font-weight: 700;
-      letter-spacing: 8pt;
-    }
-    @media (max-width: 540px) {
-      font-size: 3.6rem;
-      line-height: 1.2;
-    }
-    @media (max-width: 375px) {
-      font-size: 3.2rem;
-    }
-    @media (max-width: 320px) {
-      font-size: 2.8rem;
     }
   }
   &__subtitle {
@@ -334,8 +312,6 @@ export default {
     @media (max-width: 600px) {
       padding: 2rem 0;
       border: none;
-    }
-    @media (max-width: 500px) {
       display: none;
     }
     &--link {
@@ -347,17 +323,17 @@ export default {
   &__button-wrapper {
     @extend %flex-row;
     grid-area: btn;
-    @media (max-width: 540px) {
+    @media (max-width: 600px) {
       flex-direction: column;
       width: 100%;
       flex: 1 0 100%;
-      justify-content: flex-end;
+      justify-content: flex-start;
     }
   }
   &__button {
     &:first-child {
       margin-right: 2rem;
-      @media (max-width: 540px) {
+      @media (max-width: 600px) {
         margin: 0 0 16pt;
       }
     }
@@ -423,16 +399,13 @@ export default {
     @media (max-width: 600px) {
       flex-direction: column;
       align-items: flex-start;
-      padding-top: 20pt;
-    }
-    @media (max-width: 540px) {
-      padding: 26pt 0 22pt;
+      padding: 26pt 0 36pt;
     }
     @media (max-width: 375px) {
-      padding: 22pt 0 18pt;
+      padding: 22pt 0 32pt;
     }
     @media (max-width: 320px) {
-      padding: 14pt 0 10pt;
+      padding: 14pt 0 22pt;
     }
   }
 
