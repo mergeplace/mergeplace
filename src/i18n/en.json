@@ -254,9 +254,9 @@
     }
   },
   "time": {
-    "weekday": "Every day:",
+    "weekdayText": "Every day:",
     "weekdayTime": "8am – 6pm",
-    "weekend": "",
+    "weekendText": "",
     "weekendTime": ""
   }
 }
