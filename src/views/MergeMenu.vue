@@ -103,13 +103,13 @@
         </svg>
       </div>
       <p class="menu__text menu__text--day menu-row-2">
-        {{ $t("time.weekday") }}
+        {{ $t("time.weekdayText") }}
       </p>
       <p class="menu__text menu__text--time menu-row-3">
         {{ $t("time.weekdayTime") }}
       </p>
       <p class="menu__text menu__text--day menu-row-5">
-        {{ $t("time.weekend") }}
+        {{ $t("time.weekendText") }}
       </p>
       <p class="menu__text menu__text--time menu-row-6">
         {{ $t("time.weekendTime") }}
