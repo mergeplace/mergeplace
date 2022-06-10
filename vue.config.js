@@ -1,3 +1,5 @@
+const routes = ['/', '/about', '/coworking', '/meeting-room'];
+
 module.exports = {
   css: {
     loaderOptions: {
@@ -10,16 +12,20 @@ module.exports = {
   pluginOptions: {
     prerenderSpa: {
       registry: undefined,
-      renderRoutes: [
-        '/',
-        '/about',
-        '/menu',
-        '/coworking',
-        '/meeting-room'
-      ],
+      renderRoutes: routes,
       useRenderEvent: true,
       headless: true,
-      onlyProduction: true
-    }
-  }
+      onlyProduction: true,
+    },
+    sitemap: {
+      outputDir: './dist',
+      baseURL: 'https://merge.place',
+      urls: routes,
+      pretty: true,
+      defaults: {
+        lastmod: new Date(),
+        priority: 1,
+      },
+    },
+  },
 };
