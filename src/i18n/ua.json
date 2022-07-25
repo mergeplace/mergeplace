@@ -254,8 +254,8 @@
     }
   },
   "time": {
-    "weekdayText": "Кожного дня:",
-    "weekdayTime": "8:00 – 18:00",
+    "weekdayText": "Час роботи:",
+    "weekdayTime": "24/7/365",
     "weekendText": "",
     "weekendTime": ""
   }

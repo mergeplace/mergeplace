@@ -254,8 +254,8 @@
     }
   },
   "time": {
-    "weekdayText": "Every day:",
-    "weekdayTime": "8am – 6pm",
+    "weekdayText": "Work time:",
+    "weekdayTime": "24/7/365",
     "weekendText": "",
     "weekendTime": ""
   }
