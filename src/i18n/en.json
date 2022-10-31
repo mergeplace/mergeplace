@@ -1,6 +1,11 @@
 {
+  "prices": {
+    "month": "120",
+    "week": "60",
+    "day": "15"
+  },
   "access": "Free",
-  "currency": "UAH",
+  "currency": "USD",
   "buttons": {
     "member": "ABOUT US",
     "apply": "apply",
@@ -26,10 +31,10 @@
   },
   "hello": {
     "title": {
-      "0": "Russian ",
-      "1": "ship, ",
-      "2": "go fuck ",
-      "3": "yourself"
+      "0": "Autonomous ",
+      "1": "power! ",
+      "2": "We work ",
+      "3": "24/7/365"
     },
     "subtitle": "MERGE - COWORKING IN THE CENTRE OF KREMENCHUK",
     "link": {

@@ -53,7 +53,7 @@
           <p class="day-card__price">
             {{ $t("dayCard.price") }}
             <span class="day-card__sum"
-              >{{ price
+              >{{ $t("prices.day")
               }}<span class="day-card__sum-currency">
                 {{ $t("currency") }}
               </span>
@@ -67,7 +67,7 @@
 
 <script>
 import ButtonCloseMini from "@/components/buttons/ButtonCloseMini.vue";
-import { mapMutations, mapState } from "vuex";
+import { mapMutations } from "vuex";
 
 export default {
   name: "DayCard",
@@ -83,11 +83,6 @@ export default {
       this.setTariff("day");
       this.$emit("closeCard", "day");
     },
-  },
-  computed: {
-    ...mapState("workplace", {
-      price: (state) => state.price.day,
-    }),
   },
 };
 </script>

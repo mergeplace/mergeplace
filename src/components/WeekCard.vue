@@ -53,7 +53,7 @@
           <p class="week-card__price">
             {{ $t("weekCard.price") }}
             <span class="week-card__sum"
-              >{{ price
+              >{{ $t("prices.week")
               }}<span class="week-card__sum-currency">
                 {{ $t("currency") }}
               </span>
@@ -67,7 +67,7 @@
 
 <script>
 import ButtonCloseMini from "@/components/buttons/ButtonCloseMini.vue";
-import { mapMutations, mapState } from "vuex";
+import { mapMutations } from "vuex";
 
 export default {
   name: "WeekCard",
@@ -83,12 +83,7 @@ export default {
       this.setTariff("week");
       this.$emit("closeCard", "week");
     },
-  },
-  computed: {
-    ...mapState("workplace", {
-      price: (state) => state.price.week,
-    }),
-  },
+  }
 };
 </script>
 

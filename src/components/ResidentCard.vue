@@ -89,7 +89,7 @@
           <p class="resident-card__price">
             {{ $t("dayCard.price") }}
             <span class="resident-card__sum"
-              >{{ price
+              >{{ $t("prices.month")
               }}<span class="resident-card__sum-currency">
                 {{ $t("currency") }}
               </span>
@@ -104,7 +104,7 @@
 <script>
 import ButtonCloseMini from "@/components/buttons/ButtonCloseMini.vue";
 import ButtonResident from "@/components/buttons/ButtonResident.vue";
-import { mapMutations, mapState } from "vuex";
+import { mapMutations } from "vuex";
 
 export default {
   name: "ResidentCard",
@@ -121,12 +121,7 @@ export default {
       this.setTariff("month");
       this.$emit("closeCard", "month");
     },
-  },
-  computed: {
-    ...mapState("workplace", {
-      price: (state) => state.price.month,
-    }),
-  },
+  }
 };
 </script>
 

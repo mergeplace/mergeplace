@@ -76,7 +76,8 @@
               {{ $t("aboutUs.subscription.month.feature") }}
             </p>
             <p class="subscription-type__price">
-              {{ `${price.month} ${$t("currency")}` }}
+              {{ isUSD ? "$" : "" }}{{ $t("prices.month")
+              }}{{' '}}{{ isUSD ? "" : $t("currency") }}
             </p>
             <a href="#" class="subscription-type__link-img">
               <svg class="subscription-type__img">
@@ -84,7 +85,7 @@
               </svg>
             </a>
           </div>
-           <div
+          <div
             class="subscription-type animated d06 delay-06s fadeInLeft"
             @click="visible.weekCard = true"
           >
@@ -92,7 +93,8 @@
               {{ $t("aboutUs.subscription.week.title") }}
             </p>
             <p class="subscription-type__price">
-              {{ `${price.week} ${$t("currency")}` }}
+               {{ isUSD ? "$" : "" }}{{ $t("prices.week")
+              }}{{' '}}{{ isUSD ? "" : $t("currency") }}
             </p>
             <a href="#" class="subscription-type__link-img">
               <svg class="subscription-type__img">
@@ -108,7 +110,8 @@
               {{ $t("aboutUs.subscription.day.title") }}
             </p>
             <p class="subscription-type__price">
-              {{ `${price.day} ${$t("currency")}` }}
+               {{ isUSD ? "$" : "" }}{{ $t("prices.day")
+              }}{{' '}}{{ isUSD ? "" : $t("currency") }}
             </p>
             <a href="#" class="subscription-type__link-img">
               <svg class="subscription-type__img">
@@ -231,6 +234,9 @@ export default {
   },
   computed: {
     ...mapState("workplace", ["price"]),
+    isUSD() {
+      return this.$t("currency") === "USD";
+    },
   },
 };
 </script>

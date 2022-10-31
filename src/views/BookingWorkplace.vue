@@ -53,7 +53,7 @@
 					</div>
 				</div>
 				<div class="workplace-choice-mobile__inner workplace-choice-mobile__inner--price">
-					<p class="workplace-choice-mobile__price">{{ `${price.month} ${$t('currency')}` }}</p>
+					<p class="workplace-choice-mobile__price">{{ `${$t("prices.month")} ${$t('currency')}` }}</p>
 					<a href='#' class="workplace-choice-mobile__link-img" @click.prevent="visible.residentCard = true">
 						<svg class="workplace-choice-mobile__img">
 							<use xlink:href='#infoborder' />
@@ -78,7 +78,7 @@
 					</div>
 				</div>
 				<div class="workplace-choice-mobile__inner workplace-choice-mobile__inner--price">
-					<p class="workplace-choice-mobile__price">{{ `${price.week} ${$t('currency')}` }}</p>
+					<p class="workplace-choice-mobile__price">{{ `${$t("prices.week")} ${$t('currency')}` }}</p>
 					<a href='#' class="workplace-choice-mobile__link-img" @click.prevent="visible.weekCard = true">
 						<svg class="workplace-choice-mobile__img">
 							<use xlink:href='#infoborder' />
@@ -103,7 +103,7 @@
 					</div>
 				</div>
 				<div class="workplace-choice-mobile__inner workplace-choice-mobile__inner--price">
-					<p class="workplace-choice-mobile__price">{{ `${price.day} ${$t('currency')}` }}</p>
+					<p class="workplace-choice-mobile__price">{{ `${$t("prices.day")} ${$t('currency')}` }}</p>
 					<a href='#' class="workplace-choice-mobile__link-img" @click.prevent="visible.dayCard = true">
 						<svg class="workplace-choice-mobile__img">
 							<use xlink:href='#infoborder' />
@@ -125,7 +125,7 @@
 				<div class="workplace-choice__inner">
 					<p class="workplace-choice__title">{{ $t('bookingWorkplace.checkbox.month') }}</p>
 					<p class="workplace-choice__resident">{{ $t('bookingWorkplace.checkbox.feature') }}</p>
-					<p class="workplace-choice__price">{{ `${price.month} ${$t('currency')}` }}</p>
+					<p class="workplace-choice__price">{{ `${$t("prices.month")} ${$t('currency')}` }}</p>
 					<a href='#' class="workplace-choice__link-img" @click.prevent="visible.residentCard = true">
 						<svg class="workplace-choice__img workplace-choice__img--resident">
 							<use xlink:href='#infoborder' />
@@ -144,7 +144,7 @@
                     v-model="tariff">
 				<div class="workplace-choice__inner">
 					<p class="workplace-choice__title">{{ $t('bookingWorkplace.checkbox.week') }}</p>
-					<p class="workplace-choice__price">{{ `${price.week} ${$t('currency')}` }}</p>
+					<p class="workplace-choice__price">{{ `${$t("prices.week")} ${$t('currency')}` }}</p>
 					<a href='#' class="workplace-choice__link-img" @click.prevent="visible.weekCard = true">
 						<svg class="workplace-choice__img">
 							<use xlink:href='#infoborder' />
@@ -162,7 +162,7 @@
                     v-model="tariff">
 				<div class="workplace-choice__inner">
 					<p class="workplace-choice__title">{{ $t('bookingWorkplace.checkbox.day') }}</p>
-					<p class="workplace-choice__price">{{ `${price.day} ${$t('currency')}` }}</p>
+					<p class="workplace-choice__price">{{ `${$t("prices.day")} ${$t('currency')}` }}</p>
 					<a href='#' class="workplace-choice__link-img" @click.prevent="visible.dayCard = true">
 						<svg class="workplace-choice__img">
 							<use xlink:href='#infoborder' />
