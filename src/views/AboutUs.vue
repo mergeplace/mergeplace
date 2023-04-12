@@ -56,6 +56,7 @@
             {{ $t("time.weekendTime") }}
           </p>
         </section>
+        <!--
         <section
           class="subscription-type__wrapper subscription-type__wrapper--margin"
         >
@@ -120,6 +121,7 @@
             </a>
           </div>
         </section>
+        -->
         <section class="about-us__inf about-us__inf--margin">
           <div class="about-us__inner">
             <p class="about-us__caption animated d06 delay-07s fadeInLeft">
