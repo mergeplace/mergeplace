@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <AlertBanner />
     <transition
       appear
       name="custom-classes-transition"
@@ -15,12 +16,15 @@
       leave-active-class="animated fadeOut"
       mode="out-in"
     >
-      <router-view />
+      
+      <router-view> </router-view>
+      
     </transition>
   </div>
 </template>
 
 <script>
+import AlertBanner from "@/components/AlertBanner.vue";
 import Navigation from "@/components/Navigation.vue";
 import { mapActions } from "vuex";
 
@@ -28,6 +32,7 @@ export default {
   name: "app",
   components: {
     Navigation,
+    AlertBanner,
   },
   methods: {
     ...mapActions({
