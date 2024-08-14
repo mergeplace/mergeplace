@@ -1,6 +1,6 @@
 <template>
 <div class="alert-banner">
-    Нажаль, коворкінга Merge Place більше не існує. <a href="https://mergeplace.notion.site/1052c0596ebe41f0a126b54d7ec5a506" target="_blank">Читати детальніше ↗</a>
+    Нажаль, коворкінга Merge Place більше не існує. <a href="https://dou.ua/forums/topic/49481/" target="_blank">Читати детальніше ↗</a>
 </div>
 </template>
 
